@@ -165,16 +165,34 @@
 <a class="sourceLine" id="cb9-26" data-line-number="26">coco_map &lt;-<span class="st"> </span><span class="kw">left_join</span>(nyc_zips, nyc_coco)</a>
 <a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">#&gt; Joining, by = "zip_code"</span></a>
 <a class="sourceLine" id="cb9-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb9-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb9-30" data-line-number="30">coco_map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> pct)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">color =</span> <span class="st">"gray80"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-32" data-line-number="32"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">"A"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">"Percent of</span><span class="ch">\n</span><span class="st">Licensed Dogs named 'Coco'"</span>,</a>
-<a class="sourceLine" id="cb9-34" data-line-number="34">         <span class="dt">title =</span> <span class="st">"Where's Coco?"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-35" data-line-number="35"><span class="st">    </span><span class="kw">theme_map</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-36" data-line-number="36"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"left"</span>,</a>
-<a class="sourceLine" id="cb9-37" data-line-number="37">          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">color =</span> <span class="st">"white"</span>),</a>
-<a class="sourceLine" id="cb9-38" data-line-number="38">          <span class="dt">legend.key =</span> <span class="kw">element_rect</span>(<span class="dt">color =</span> <span class="st">"gray40"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb9-29" data-line-number="29">## Map theme</a>
+<a class="sourceLine" id="cb9-30" data-line-number="30">theme_nymap &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">base_size=</span><span class="dv">9</span>, <span class="dt">base_family=</span><span class="st">""</span>) {</a>
+<a class="sourceLine" id="cb9-31" data-line-number="31">    <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(grid)</a>
+<a class="sourceLine" id="cb9-32" data-line-number="32">    <span class="kw">theme_bw</span>(<span class="dt">base_size=</span>base_size, <span class="dt">base_family=</span>base_family) <span class="op">%+replace%</span></a>
+<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="st">        </span><span class="kw">theme</span>(<span class="dt">axis.line=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-34" data-line-number="34">              <span class="dt">axis.text=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-35" data-line-number="35">              <span class="dt">axis.ticks=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-36" data-line-number="36">              <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-37" data-line-number="37">              <span class="dt">panel.background=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-38" data-line-number="38">              <span class="dt">panel.border=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-39" data-line-number="39">              <span class="dt">panel.grid=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-40" data-line-number="40">              <span class="dt">panel.spacing=</span><span class="kw"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</a>
+<a class="sourceLine" id="cb9-41" data-line-number="41">              <span class="dt">plot.background=</span><span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb9-42" data-line-number="42">              <span class="dt">legend.justification =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb9-43" data-line-number="43">              <span class="dt">legend.position =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.6</span>), </a>
+<a class="sourceLine" id="cb9-44" data-line-number="44">              <span class="dt">legend.direction =</span> <span class="st">"horizontal"</span></a>
+<a class="sourceLine" id="cb9-45" data-line-number="45">        )</a>
+<a class="sourceLine" id="cb9-46" data-line-number="46">}</a>
+<a class="sourceLine" id="cb9-47" data-line-number="47"></a>
+<a class="sourceLine" id="cb9-48" data-line-number="48">coco_map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> pct)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-49" data-line-number="49"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">color =</span> <span class="st">"gray80"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-50" data-line-number="50"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">"A"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-51" data-line-number="51"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">"Percent of Licensed Dogs"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-52" data-line-number="52"><span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">"text"</span>, <span class="dt">x =</span> <span class="fl">-74.145</span>, <span class="dt">y =</span> <span class="fl">40.82</span>, </a>
+<a class="sourceLine" id="cb9-53" data-line-number="53">           <span class="dt">label =</span> <span class="st">"Where's Coco?"</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-54" data-line-number="54"><span class="st">    </span><span class="kw">theme_nymap</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-55" data-line-number="55"><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title.position =</span> <span class="st">"top"</span>, </a>
+<a class="sourceLine" id="cb9-56" data-line-number="56">                               <span class="dt">label.position =</span> <span class="st">"bottom"</span>)) </a></code></pre></div>
 <p><img src="reference/figures/README-mapexample-1.png" title="plot of chunk mapexample" alt="plot of chunk mapexample" width="100%"></p>
 </div>
 </div>
