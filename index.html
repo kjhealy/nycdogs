@@ -106,70 +106,75 @@
 <div id="loading-the-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#loading-the-data" class="anchor"></a>Loading the data</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(nycdogs)</a></code></pre></div>
+<p>The package works best with the <a href="http://tidyverse.org/">tidyverse</a> libraries and the <a href="https://r-spatial.github.io/sf/index.html">simple features</a> package for mapping.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0</span></a></code></pre></div>
+<p>Load the data:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(nycdogs)</a></code></pre></div>
 <p>To look at the tibble that contains the licensing data, do this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">nyc_license</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; # A tibble: 122,203 x 14</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;    animal_name animal_gender animal_birth_mo… breed_rc borough zip_code</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;         &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  1 Shadow      M             2000-01-01       Beagle   Brookl…    11236</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  2 Rocco       M             2011-10-01       Boxer    Brookl…    11210</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  3 Luigi       M             2005-09-01       Maltese  Bronx      10464</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  4 Petunia     F             2013-08-01       Pug      Brookl…    11221</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;  5 Romeo       M             2008-10-01       Maltese  Bronx      10451</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;  6 Brandy      M             2004-01-01       Unknown  Brookl…    11225</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;  7 Sam         M             2011-05-01       Pug      Manhat…    10021</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;  8 May         F             2004-05-01       Unknown  Staten…    10305</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;  9 Ruby        F             2010-04-01       Boxer    Brookl…    11220</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; 10 Leo         M             2014-01-01       Beagle   Bronx      10468</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; # … with 122,193 more rows, and 8 more variables:</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; #   community_district &lt;dbl&gt;, census_tract2010 &lt;dbl&gt;, nta &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; #   city_council_district &lt;dbl&gt;, congressional_district &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; #   state_senatorial_district &lt;dbl&gt;, license_issued_date &lt;date&gt;,</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; #   license_expired_date &lt;date&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">nyc_license</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; # A tibble: 122,203 x 14</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;    animal_name animal_gender animal_birth_mo… breed_rc borough zip_code</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;         &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  1 Shadow      M             2000-01-01       Beagle   Brookl…    11236</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  2 Rocco       M             2011-10-01       Boxer    Brookl…    11210</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  3 Luigi       M             2005-09-01       Maltese  Bronx      10464</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  4 Petunia     F             2013-08-01       Pug      Brookl…    11221</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  5 Romeo       M             2008-10-01       Maltese  Bronx      10451</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  6 Brandy      M             2004-01-01       Unknown  Brookl…    11225</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  7 Sam         M             2011-05-01       Pug      Manhat…    10021</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  8 May         F             2004-05-01       Unknown  Staten…    10305</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  9 Ruby        F             2010-04-01       Boxer    Brookl…    11220</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 10 Leo         M             2014-01-01       Beagle   Bronx      10468</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; # … with 122,193 more rows, and 8 more variables:</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; #   community_district &lt;dbl&gt;, census_tract2010 &lt;dbl&gt;, nta &lt;chr&gt;,</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; #   city_council_district &lt;dbl&gt;, congressional_district &lt;dbl&gt;,</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; #   state_senatorial_district &lt;dbl&gt;, license_issued_date &lt;date&gt;,</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; #   license_expired_date &lt;date&gt;</span></a></code></pre></div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
 <p>You can use the <code>nyc_zips</code> object to create a map of, for example, the prevalence of dog names by zip code:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">nyc_coco &lt;-<span class="st"> </span>nyc_license <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(zip_code, animal_name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">    </span><span class="kw">tally</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(n),</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">           <span class="dt">pct =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(freq<span class="op">*</span><span class="dv">100</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(animal_name <span class="op">==</span><span class="st"> "Coco"</span>)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">nyc_coco</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; # A tibble: 170 x 5</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; # Groups:   zip_code [170]</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;    zip_code animal_name     n    freq   pct</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;  1    10001 Coco            9 0.00994  0.99</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;  2    10002 Coco            7 0.00617  0.62</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;  3    10003 Coco            6 0.00389  0.39</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;  4    10004 Coco            1 0.00752  0.75</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt;  5    10005 Coco            1 0.00346  0.35</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt;  6    10007 Coco            5 0.0243   2.43</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;  7    10009 Coco            9 0.00427  0.43</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;  8    10010 Coco            9 0.00783  0.78</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;  9    10011 Coco           12 0.00537  0.54</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt; 10    10012 Coco            2 0.00234  0.23</span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; # … with 160 more rows</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26">coco_map &lt;-<span class="st"> </span><span class="kw">left_join</span>(nyc_zips, nyc_coco)</a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt; Joining, by = "zip_code"</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30">coco_map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> pct)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">color =</span> <span class="st">"gray80"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">"A"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">"Percent of</span><span class="ch">\n</span><span class="st">Licensed Dogs named 'Coco'"</span>,</a>
-<a class="sourceLine" id="cb8-34" data-line-number="34">         <span class="dt">title =</span> <span class="st">"Where's Coco?"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="st">    </span><span class="kw">theme_map</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"left"</span>,</a>
-<a class="sourceLine" id="cb8-37" data-line-number="37">          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">color =</span> <span class="st">"white"</span>),</a>
-<a class="sourceLine" id="cb8-38" data-line-number="38">          <span class="dt">legend.key =</span> <span class="kw">element_rect</span>(<span class="dt">color =</span> <span class="st">"gray40"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">nyc_coco &lt;-<span class="st"> </span>nyc_license <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(zip_code, animal_name) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">    </span><span class="kw">tally</span>() <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(n),</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">           <span class="dt">pct =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(freq<span class="op">*</span><span class="dv">100</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(animal_name <span class="op">==</span><span class="st"> "Coco"</span>)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">nyc_coco</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; # A tibble: 170 x 5</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; # Groups:   zip_code [170]</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;    zip_code animal_name     n    freq   pct</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  1    10001 Coco            9 0.00994  0.99</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  2    10002 Coco            7 0.00617  0.62</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  3    10003 Coco            6 0.00389  0.39</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt;  4    10004 Coco            1 0.00752  0.75</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt;  5    10005 Coco            1 0.00346  0.35</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt;  6    10007 Coco            5 0.0243   2.43</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt;  7    10009 Coco            9 0.00427  0.43</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt;  8    10010 Coco            9 0.00783  0.78</span></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt;  9    10011 Coco           12 0.00537  0.54</span></a>
+<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt; 10    10012 Coco            2 0.00234  0.23</span></a>
+<a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">#&gt; # … with 160 more rows</span></a>
+<a class="sourceLine" id="cb9-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb9-26" data-line-number="26">coco_map &lt;-<span class="st"> </span><span class="kw">left_join</span>(nyc_zips, nyc_coco)</a>
+<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">#&gt; Joining, by = "zip_code"</span></a>
+<a class="sourceLine" id="cb9-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb9-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb9-30" data-line-number="30">coco_map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> pct)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">color =</span> <span class="st">"gray80"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-32" data-line-number="32"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">"A"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">"Percent of</span><span class="ch">\n</span><span class="st">Licensed Dogs named 'Coco'"</span>,</a>
+<a class="sourceLine" id="cb9-34" data-line-number="34">         <span class="dt">title =</span> <span class="st">"Where's Coco?"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-35" data-line-number="35"><span class="st">    </span><span class="kw">theme_map</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-36" data-line-number="36"><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"left"</span>,</a>
+<a class="sourceLine" id="cb9-37" data-line-number="37">          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">color =</span> <span class="st">"white"</span>),</a>
+<a class="sourceLine" id="cb9-38" data-line-number="38">          <span class="dt">legend.key =</span> <span class="kw">element_rect</span>(<span class="dt">color =</span> <span class="st">"gray40"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>))</a></code></pre></div>
 <p><img src="reference/figures/README-mapexample-1.png" title="plot of chunk mapexample" alt="plot of chunk mapexample" width="100%"></p>
 </div>
 </div>
