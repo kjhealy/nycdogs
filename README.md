@@ -2,7 +2,7 @@
 
 
 
-# nycdogs <img src="man/figures/nycdogs.png" align="right" width="120" />
+# nycdogs <img src="man/figures/nycdogs.png" align="right" width="240" />
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/kjhealy/nycdogs.svg?branch=master)](https://travis-ci.org/kjhealy/nycdogs)
