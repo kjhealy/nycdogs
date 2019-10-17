@@ -1,16 +1,16 @@
 Package: nycdogs
-Title: What the Package Does (One Line, Title Case)
+Title: New York City dog licenses and bite incidents by zip code
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Kieran",
+           family = "Healy",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "kjhealy@gmail.com")
+Description: A data package containing three data sets covering dog ownership in New York City.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
     sf,
     dplyr
+RoxygenNote: 6.1.1

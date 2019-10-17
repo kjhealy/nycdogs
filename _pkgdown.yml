@@ -1,0 +1,19 @@
+destination: docs
+authors:
+  Kieran Healy:
+    href: http://kieranhealy.org
+template:
+  params:
+    bootswatch: cosmo
+reference:
+  - title: "Datasets"
+    desc: >
+      Included datasets.
+    contents:
+      - nyc_license
+      - nyc_bites
+      - nyc_zips
+navbar:
+  right:
+   - icon: fa-github
+     href: https://github.com/kjhealy/gssr
