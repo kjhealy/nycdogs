@@ -41,10 +41,6 @@ get_badge <- function (pkg, type = c("last-month", "last-week", "grand-total"),
     placeholder <- "CRAN link"
     paste0("[![](", svg, ")](", url, ")")
 }
-
-library(tidyverse)
-library(sf)
-
 ```
 
 # nycdogs <img src="man/figures/nycdogs.png" align="right" width="240" />
@@ -106,6 +102,15 @@ Note that the drat repository only contains data packages that are not on CRAN, 
 
 
 ## Loading the data
+
+The package works best with the [tidyverse](http://tidyverse.org/) libraries and the [simple features](https://r-spatial.github.io/sf/index.html) package for mapping.
+
+```{r libs}
+library(tidyverse)
+library(sf)
+```
+
+Load the data:
 
 ```{r load}
 library(nycdogs)

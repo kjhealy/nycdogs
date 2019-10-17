@@ -66,6 +66,17 @@ Note that the drat repository only contains data packages that are not on CRAN, 
 
 ## Loading the data
 
+The package works best with the [tidyverse](http://tidyverse.org/) libraries and the [simple features](https://r-spatial.github.io/sf/index.html) package for mapping.
+
+
+```r
+library(tidyverse)
+library(sf)
+#> Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0
+```
+
+Load the data:
+
 
 ```r
 library(nycdogs)
