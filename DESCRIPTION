@@ -8,6 +8,7 @@ Authors@R:
            email = "kjhealy@gmail.com")
 Description: A data package containing three data sets covering dog ownership in New York City.
 License: MIT + file LICENSE
+Depends: R (>= 3.5)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
