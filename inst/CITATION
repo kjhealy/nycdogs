@@ -1,15 +1,13 @@
-citHeader("To cite package 'nycdogs' in publications use:")
-     
- year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", meta$Date, perl = TRUE)
- vers <- paste("R package version", meta$Version)
- 
- citEntry(entry="Manual",
-		  title = "nycdogs: Dogs of New York",
-		  author = personList(as.person("Kieran Healy")),
-		  year = year,
-		  note = vers,
-		  textVersion =
-		  paste("Kieran Healy (",
-				year,
-				"). nycdogs: Dogs of New York. ",
-				vers, ".", sep=""))
+citHeader("To cite the package 'nycdogs' in publications use:")
+
+bibentry(
+    bibtype  = "Manual",
+    title = "nycdogs: Dogs of New York",
+    author   = person(given = "Kieran",
+                      family = "Healy",
+                      role = c("aut", "cre"),
+                      email = "kjhealy@soc.duke.edu"),
+    year = "2019",
+    note = "R package version 0.1.0",
+    url      = "http://kjhealy.github.io/nycdogs",
+  key      = "nycdogs")
