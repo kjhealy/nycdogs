@@ -2,10 +2,10 @@
 
 
 
-# Dogs of New York
+# nycdogs <img src="man/figures/nycdogs.png" align="right" width="120" />
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/kjhealy/nycdogs.svg?branch=master)](https://travis-ci.org/kjhealy/nycdogs) 
+[![Travis build status](https://travis-ci.org/kjhealy/nycdogs.svg?branch=master)](https://travis-ci.org/kjhealy/nycdogs)
 <!-- badges: end -->
 
 
