@@ -6,3 +6,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+^misc$
+^tmp.r$
+^.github$
