@@ -6,19 +6,21 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>New York City dog licenses and bite incidents by zip code • nycdogs</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="New York City dog licenses and bite incidents by zip code">
 <meta property="og:description" content="A data package containing three data sets covering dog ownership in New York City.">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,25 +33,19 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nycdogs</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/kjhealy/nycdogs">
+  <a href="https://github.com/kjhealy/nycdogs" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
@@ -66,185 +62,198 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="nycdogs" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#nycdogs" class="anchor"></a>nycdogs <img src="reference/figures/nycdogs.png" align="right" width="240">
+<div class="section level1">
+<div class="page-header"><h1 id="nycdogs-">nycdogs <img src="reference/figures/nycdogs.png" align="right" width="240"><a class="anchor" aria-label="anchor" href="#nycdogs-"></a>
 </h1></div>
 <!-- badges: start -->
 
 <p>The <code>nycdogs</code> package contains three datasets, <code>nyc_license</code>, <code>nyc_bites</code>, and <code>nyc_zips</code>. They contain, respectively, data on all licensed dogs in New York city, data on reported dog bites in New York city, and geographical data for New York city at the zip code level.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p><code>nycdogs</code> is a data package, bundling several datasets into a convenient format. The relatively large size of the data in the package means it is not suitable for hosting on <a href="https://cran.r-project.org/">CRAN</a>, the core R package repository. There are two ways to install it.</p>
-<div id="install-direct-from-github" class="section level3">
-<h3 class="hasAnchor">
-<a href="#install-direct-from-github" class="anchor"></a>Install direct from GitHub</h3>
-<p>You can install the beta version of nycdogs from <a href="https://github.com/kjhealy/nycdogs">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"kjhealy/nycdogs"</span>)</a></code></pre></div>
-</div>
-<div id="installation-using-drat" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation-using-drat" class="anchor"></a>Installation using <code>drat</code>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p><code>nycdogs</code> is a data package, bundling several datasets into a convenient format. The relatively large size of the data in the package means it is not suitable for hosting on <a href="https://cran.r-project.org/" class="external-link">CRAN</a>, the core R package repository. There are two ways to install it.</p>
+<div class="section level3">
+<h3 id="install-direct-from-github">Install direct from GitHub<a class="anchor" aria-label="anchor" href="#install-direct-from-github"></a>
 </h3>
-<p>While using <code>install_github()</code> works just fine, it would be nicer to be able to just type <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("nycdogs")</a></code> or <code><a href="https://rdrr.io/r/utils/update.packages.html">update.packages("nycdogs")</a></code> in the ordinary way. We can do this using Dirk Eddelbuettel’s <a href="http://eddelbuettel.github.io/drat/DratForPackageUsers.html">drat</a> package. Drat provides a convenient way to make R aware of package repositories other than CRAN.</p>
+<p>You can install the beta version of nycdogs from <a href="https://github.com/kjhealy/nycdogs" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"kjhealy/nycdogs"</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="installation-using-drat">Installation using <code>drat</code>
+<a class="anchor" aria-label="anchor" href="#installation-using-drat"></a>
+</h3>
+<p>While using <code>install_github()</code> works just fine, it would be nicer to be able to just type <code>install.packages("nycdogs")</code> or <code>update.packages("nycdogs")</code> in the ordinary way. We can do this using Dirk Eddelbuettel’s <a href="http://eddelbuettel.github.io/drat/DratForPackageUsers.html" class="external-link">drat</a> package. Drat provides a convenient way to make R aware of package repositories other than CRAN.</p>
 <p>First, install <code>drat</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="st">"drat"</span>)) {</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"drat"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"drat"</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://github.com/eddelbuettel/drat" class="external-link">"drat"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"drat"</span><span class="op">)</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/eddelbuettel/drat" class="external-link">"drat"</a></span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
 <p>Then use <code>drat</code> to tell R about the repository where <code>nycdogs</code> is hosted:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">drat<span class="op">::</span><span class="kw">addRepo</span>(<span class="st">"kjhealy"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">drat</span><span class="fu">::</span><span class="fu">addRepo</span><span class="op">(</span><span class="st">"kjhealy"</span><span class="op">)</span></code></pre></div>
 <p>You can now install <code>nycdogs</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"nycdogs"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"nycdogs"</span><span class="op">)</span></code></pre></div>
 <p>To ensure that the <code>nycdogs</code> repository is always available, you can add the following line to your <code>.Rprofile</code> or <code>.Rprofile.site</code> file:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">drat<span class="op">::</span><span class="kw">addRepo</span>(<span class="st">"kjhealy"</span>)</a></code></pre></div>
-<p>With that in place you’ll be able to do <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("nycdogs")</a></code> or <code><a href="https://rdrr.io/r/utils/update.packages.html">update.packages("nycdogs")</a></code> and have everything work as you’d expect.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">drat</span><span class="fu">::</span><span class="fu">addRepo</span><span class="op">(</span><span class="st">"kjhealy"</span><span class="op">)</span></code></pre></div>
+<p>With that in place you’ll be able to do <code>install.packages("nycdogs")</code> or <code>update.packages("nycdogs")</code> and have everything work as you’d expect.</p>
 <p>Note that the drat repository only contains data packages that are not on CRAN, so you will never be in danger of grabbing the wrong version of any other package.</p>
 </div>
 </div>
-<div id="loading-the-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#loading-the-data" class="anchor"></a>Loading the data</h2>
-<p>The package works best with the <a href="http://tidyverse.org/">tidyverse</a> libraries and the <a href="https://r-spatial.github.io/sf/index.html">simple features</a> package for mapping.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sf)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0</span></a></code></pre></div>
+<div class="section level2">
+<h2 id="loading-the-data">Loading the data<a class="anchor" aria-label="anchor" href="#loading-the-data"></a>
+</h2>
+<p>The package works best with the <a href="http://tidyverse.org/" class="external-link">tidyverse</a> libraries and the <a href="https://r-spatial.github.io/sf/index.html" class="external-link">simple features</a> package for mapping.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>
+<span class="co">#&gt; Linking to GEOS 3.7.2, GDAL 2.4.2, PROJ 5.2.0</span></code></pre></div>
 <p>Load the data:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(nycdogs)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kjhealy/nycdogs" class="external-link">nycdogs</a></span><span class="op">)</span></code></pre></div>
 <p>To look at the tibble that contains the licensing data, do this:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">nyc_license</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; # A tibble: 122,203 x 14</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt;    animal_name animal_gender animal_birth_mo… breed_rc borough zip_code</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;         &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;  1 Shadow      M             2000-01-01       Beagle   Brookl…    11236</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;  2 Rocco       M             2011-10-01       Boxer    Brookl…    11210</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;  3 Luigi       M             2005-09-01       Maltese  Bronx      10464</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;  4 Petunia     F             2013-08-01       Pug      Brookl…    11221</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;  5 Romeo       M             2008-10-01       Maltese  Bronx      10451</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;  6 Brandy      M             2004-01-01       Unknown  Brookl…    11225</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;  7 Sam         M             2011-05-01       Pug      Manhat…    10021</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;  8 May         F             2004-05-01       Unknown  Staten…    10305</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;  9 Ruby        F             2010-04-01       Boxer    Brookl…    11220</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 10 Leo         M             2014-01-01       Beagle   Bronx      10468</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; # … with 122,193 more rows, and 8 more variables:</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; #   community_district &lt;dbl&gt;, census_tract2010 &lt;dbl&gt;, nta &lt;chr&gt;,</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; #   city_council_district &lt;dbl&gt;, congressional_district &lt;dbl&gt;,</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt; #   state_senatorial_district &lt;dbl&gt;, license_issued_date &lt;date&gt;,</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; #   license_expired_date &lt;date&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nyc_license</span>
+<span class="co">#&gt; # A tibble: 122,203 x 14</span>
+<span class="co">#&gt;    animal_name animal_gender animal_birth_mo… breed_rc borough zip_code</span>
+<span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;         &lt;date&gt;           &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;</span>
+<span class="co">#&gt;  1 Shadow      M             2000-01-01       Beagle   Brookl…    11236</span>
+<span class="co">#&gt;  2 Rocco       M             2011-10-01       Boxer    Brookl…    11210</span>
+<span class="co">#&gt;  3 Luigi       M             2005-09-01       Maltese  Bronx      10464</span>
+<span class="co">#&gt;  4 Petunia     F             2013-08-01       Pug      Brookl…    11221</span>
+<span class="co">#&gt;  5 Romeo       M             2008-10-01       Maltese  Bronx      10451</span>
+<span class="co">#&gt;  6 Brandy      M             2004-01-01       Unknown  Brookl…    11225</span>
+<span class="co">#&gt;  7 Sam         M             2011-05-01       Pug      Manhat…    10021</span>
+<span class="co">#&gt;  8 May         F             2004-05-01       Unknown  Staten…    10305</span>
+<span class="co">#&gt;  9 Ruby        F             2010-04-01       Boxer    Brookl…    11220</span>
+<span class="co">#&gt; 10 Leo         M             2014-01-01       Beagle   Bronx      10468</span>
+<span class="co">#&gt; # … with 122,193 more rows, and 8 more variables:</span>
+<span class="co">#&gt; #   community_district &lt;dbl&gt;, census_tract2010 &lt;dbl&gt;, nta &lt;chr&gt;,</span>
+<span class="co">#&gt; #   city_council_district &lt;dbl&gt;, congressional_district &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   state_senatorial_district &lt;dbl&gt;, license_issued_date &lt;date&gt;,</span>
+<span class="co">#&gt; #   license_expired_date &lt;date&gt;</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
 <p>You can use the <code>nyc_zips</code> object to create a map of, for example, the prevalence of dog names by zip code:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">nyc_coco &lt;-<span class="st"> </span>nyc_license <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">    </span><span class="kw">group_by</span>(zip_code, animal_name) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">    </span><span class="kw">tally</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">freq =</span> n <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(n),</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">           <span class="dt">pct =</span> <span class="kw"><a href="https://rdrr.io/r/base/Round.html">round</a></span>(freq<span class="op">*</span><span class="dv">100</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(animal_name <span class="op">==</span><span class="st"> "Coco"</span>)</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">nyc_coco</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; # A tibble: 170 x 5</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; # Groups:   zip_code [170]</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;    zip_code animal_name     n    freq   pct</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;  1    10001 Coco            9 0.00994  0.99</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;  2    10002 Coco            7 0.00617  0.62</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;  3    10003 Coco            6 0.00389  0.39</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt;  4    10004 Coco            1 0.00752  0.75</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt;  5    10005 Coco            1 0.00346  0.35</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt;  6    10007 Coco            5 0.0243   2.43</span></a>
-<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt;  7    10009 Coco            9 0.00427  0.43</span></a>
-<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt;  8    10010 Coco            9 0.00783  0.78</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt;  9    10011 Coco           12 0.00537  0.54</span></a>
-<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt; 10    10012 Coco            2 0.00234  0.23</span></a>
-<a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">#&gt; # … with 160 more rows</span></a>
-<a class="sourceLine" id="cb9-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb9-26" data-line-number="26">coco_map &lt;-<span class="st"> </span><span class="kw">left_join</span>(nyc_zips, nyc_coco)</a>
-<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">#&gt; Joining, by = "zip_code"</span></a>
-<a class="sourceLine" id="cb9-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb9-29" data-line-number="29">## Map theme</a>
-<a class="sourceLine" id="cb9-30" data-line-number="30">theme_nymap &lt;-<span class="st"> </span><span class="cf">function</span>(<span class="dt">base_size=</span><span class="dv">9</span>, <span class="dt">base_family=</span><span class="st">""</span>) {</a>
-<a class="sourceLine" id="cb9-31" data-line-number="31">    <span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span>(grid)</a>
-<a class="sourceLine" id="cb9-32" data-line-number="32">    <span class="kw">theme_bw</span>(<span class="dt">base_size=</span>base_size, <span class="dt">base_family=</span>base_family) <span class="op">%+replace%</span></a>
-<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="st">        </span><span class="kw">theme</span>(<span class="dt">axis.line=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-34" data-line-number="34">              <span class="dt">axis.text=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-35" data-line-number="35">              <span class="dt">axis.ticks=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-36" data-line-number="36">              <span class="dt">axis.title=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-37" data-line-number="37">              <span class="dt">panel.background=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-38" data-line-number="38">              <span class="dt">panel.border=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-39" data-line-number="39">              <span class="dt">panel.grid=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-40" data-line-number="40">              <span class="dt">panel.spacing=</span><span class="kw"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</a>
-<a class="sourceLine" id="cb9-41" data-line-number="41">              <span class="dt">plot.background=</span><span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb9-42" data-line-number="42">              <span class="dt">legend.justification =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">0</span>),</a>
-<a class="sourceLine" id="cb9-43" data-line-number="43">              <span class="dt">legend.position =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0.1</span>, <span class="fl">0.6</span>), </a>
-<a class="sourceLine" id="cb9-44" data-line-number="44">              <span class="dt">legend.direction =</span> <span class="st">"horizontal"</span></a>
-<a class="sourceLine" id="cb9-45" data-line-number="45">        )</a>
-<a class="sourceLine" id="cb9-46" data-line-number="46">}</a>
-<a class="sourceLine" id="cb9-47" data-line-number="47"></a>
-<a class="sourceLine" id="cb9-48" data-line-number="48">coco_map <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">fill =</span> pct)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-49" data-line-number="49"><span class="st">    </span><span class="kw">geom_sf</span>(<span class="dt">color =</span> <span class="st">"gray80"</span>, <span class="dt">size =</span> <span class="fl">0.1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-50" data-line-number="50"><span class="st">    </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">option =</span> <span class="st">"A"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-51" data-line-number="51"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">fill =</span> <span class="st">"Percent of Licensed Dogs"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-52" data-line-number="52"><span class="st">  </span><span class="kw">annotate</span>(<span class="dt">geom =</span> <span class="st">"text"</span>, <span class="dt">x =</span> <span class="fl">-74.145</span>, <span class="dt">y =</span> <span class="fl">40.82</span>, </a>
-<a class="sourceLine" id="cb9-53" data-line-number="53">           <span class="dt">label =</span> <span class="st">"Where's Coco?"</span>, <span class="dt">size =</span> <span class="dv">6</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-54" data-line-number="54"><span class="st">    </span><span class="kw">theme_nymap</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-55" data-line-number="55"><span class="st">    </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title.position =</span> <span class="st">"top"</span>, </a>
-<a class="sourceLine" id="cb9-56" data-line-number="56">                               <span class="dt">label.position =</span> <span class="st">"bottom"</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">nyc_coco</span> <span class="op">&lt;-</span> <span class="va">nyc_license</span> <span class="op">%&gt;%</span>
+    <span class="fu">group_by</span><span class="op">(</span><span class="va">zip_code</span>, <span class="va">animal_name</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">tally</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu">mutate</span><span class="op">(</span>freq <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,
+           pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">freq</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">animal_name</span> <span class="op">==</span> <span class="st">"Coco"</span><span class="op">)</span>
+
+<span class="va">nyc_coco</span>
+<span class="co">#&gt; # A tibble: 170 x 5</span>
+<span class="co">#&gt; # Groups:   zip_code [170]</span>
+<span class="co">#&gt;    zip_code animal_name     n    freq   pct</span>
+<span class="co">#&gt;       &lt;int&gt; &lt;chr&gt;       &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt;  1    10001 Coco            9 0.00994  0.99</span>
+<span class="co">#&gt;  2    10002 Coco            7 0.00617  0.62</span>
+<span class="co">#&gt;  3    10003 Coco            6 0.00389  0.39</span>
+<span class="co">#&gt;  4    10004 Coco            1 0.00752  0.75</span>
+<span class="co">#&gt;  5    10005 Coco            1 0.00346  0.35</span>
+<span class="co">#&gt;  6    10007 Coco            5 0.0243   2.43</span>
+<span class="co">#&gt;  7    10009 Coco            9 0.00427  0.43</span>
+<span class="co">#&gt;  8    10010 Coco            9 0.00783  0.78</span>
+<span class="co">#&gt;  9    10011 Coco           12 0.00537  0.54</span>
+<span class="co">#&gt; 10    10012 Coco            2 0.00234  0.23</span>
+<span class="co">#&gt; # … with 160 more rows</span>
+
+<span class="va">coco_map</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">nyc_zips</span>, <span class="va">nyc_coco</span><span class="op">)</span>
+<span class="co">#&gt; Joining, by = "zip_code"</span>
+
+<span class="co">## Map theme</span>
+<span class="va">theme_nymap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_size</span><span class="op">=</span><span class="fl">9</span>, <span class="va">base_family</span><span class="op">=</span><span class="st">""</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span>
+    <span class="fu">theme_bw</span><span class="op">(</span>base_size<span class="op">=</span><span class="va">base_size</span>, base_family<span class="op">=</span><span class="va">base_family</span><span class="op">)</span> <span class="op">%+replace%</span>
+        <span class="fu">theme</span><span class="op">(</span>axis.line<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              axis.text<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              axis.ticks<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              axis.title<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              panel.background<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              panel.border<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              panel.grid<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              panel.spacing<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"lines"</span><span class="op">)</span>,
+              plot.background<span class="op">=</span><span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+              legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,
+              legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.6</span><span class="op">)</span>, 
+              legend.direction <span class="op">=</span> <span class="st">"horizontal"</span>
+        <span class="op">)</span>
+<span class="op">}</span>
+
+<span class="va">coco_map</span> <span class="op">%&gt;%</span> <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">pct</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">geom_sf</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray80"</span>, size <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">scale_fill_viridis_c</span><span class="op">(</span>option <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Percent of Licensed Dogs"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="op">-</span><span class="fl">74.145</span>, y <span class="op">=</span> <span class="fl">40.82</span>, 
+           label <span class="op">=</span> <span class="st">"Where's Coco?"</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">theme_nymap</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
+    <span class="fu">guides</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">guide_legend</span><span class="op">(</span>title.position <span class="op">=</span> <span class="st">"top"</span>, 
+                               label.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> </code></pre></div>
 <p><img src="reference/figures/README-mapexample-1.png" title="plot of chunk mapexample" alt="plot of chunk mapexample" width="100%"></p>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/kjhealy/nycdogs">https://​github.com/​kjhealy/​nycdogs</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/kjhealy/nycdogs/issues">https://​github.com/​kjhealy/​nycdogs/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing nycdogs</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="http://kieranhealy.org">Kieran Healy</a> <br><small class="roles"> Author, maintainer </small>  </li>
+<li><a href="https://github.com/kjhealy/nycdogs/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/kjhealy/nycdogs/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/kjhealy/nycdogs"><img src="https://travis-ci.org/kjhealy/nycdogs.svg?branch=master" alt="Travis build status"></a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing nycdogs</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="http://kieranhealy.org" class="external-link">Kieran Healy</a> <br><small class="roles"> Author, maintainer </small>  </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://travis-ci.org/kjhealy/nycdogs" class="external-link"><img src="https://travis-ci.org/kjhealy/nycdogs.svg?branch=master" alt="Travis build status"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="http://kieranhealy.org">Kieran Healy</a>.</p>
+  <p></p>
+<p>Developed by <a href="http://kieranhealy.org" class="external-link">Kieran Healy</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -252,6 +261,8 @@
 
   
 
+
+  
 
   </body>
 </html>
