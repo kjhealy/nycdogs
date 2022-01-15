@@ -31,10 +31,10 @@
 
 #' New York City Dog Reported Dog bites
 #'
-#' Reported dog bite incidents in New York city between April 10th
-#' 2014 and January 25th 2018.
+#' Reported dog bite incidents in New York city between January 1st 2015
+#' and Decenber 31st 2017,
 #' 
-#' @format A tibble containing 8,707 rows and 11 columns
+#' @format A tibble containing 10,280 rows and 11 columns
 #' \describe{
 #' \item{\code{uniqueid}}{Incident identified.}
 #' \item{\code{date_of_bite}}{Date of bite.}
@@ -46,7 +46,7 @@
 #' \item{\code{borough}}{Borough where bite occurred.}
 #' \item{\code{zip_code}}{Zip code where bite occurred.}
 #' \item{\code{year}}{Year}
-#' \item{\code{breed_rc}}{Recoded breed (simplier caegories)}
+#' \item{\code{breed_rc}}{Recoded breed variable with aggregated breed categories)}
 #'}
 #'
 #' @docType data
@@ -59,23 +59,21 @@
 #' Licensed Dogs in New York City as of January 1st 2017
 #'
 #' Dogs in New York city with licenses issued between
-#' September 12th 2014 and December 31st 2016.
+#' September 12th 2014 and March 17th 2021. The data were extracted in three waves
+#' and contain duplicate dogs across extraction years.
 #' 
-#' @format A tibble containing 122,203 rows and 14 columns
+#' 
+#' @format A tibble containing 493,072 rows and 9 columns
 #' \describe{
 #' \item{\code{animal_name}}{Name of dog.}
 #' \item{\code{animal_gender}}{Sex of dog.}
-#' \item{\code{animal_birth_month}}{Birth month.}
+#' \item{\code{animal_birth_year}}{Birth year}
 #' \item{\code{breed_rc}}{Breed of dog (simplier categories).}
-#' \item{\code{borough}}{Borough of owner.}
+#' \item{\code{borough}}{Borough of owner. (Some boroughs are approximate due to zip codes.)}
 #' \item{\code{zip_code}}{Zip code of owner.}
-#' \item{\code{community_district}}{Community district of owner}
-#' \item{\code{nta}}{Neighborhood Tabulation Area.}
-#' \item{\code{city_council_district}}{City council district.}
-#' \item{\code{congressional_district}}{Congressional district}
-#' \item{\code{state_senatorial_district}}{State Senatorial district}
 #' \item{\code{license_issued_date}}{Date license issued}
 #' \item{\code{license_expired_date}}{Date license expired}
+#' \item{\code{extract_year}}{Year record was extracted}
 #' }
 #'
 #' @docType data
