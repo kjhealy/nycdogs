@@ -20,62 +20,12 @@ city, and geographical data for New York city at the zip code level.
 `nycdogs` is a data package, bundling several datasets into a convenient
 format. The relatively large size of the data in the package means it is
 not suitable for hosting on [CRAN](https://cran.r-project.org/), the
-core R package repository. There are two ways to install it.
-
-### Install direct from GitHub
-
-You can install the beta version of nycdogs from
+core R package repository. Install the package from
 [GitHub](https://github.com/kjhealy/nycdogs) with:
 
 ``` r
-devtools::install_github("kjhealy/nycdogs")
+remotes::install_github("kjhealy/nycdogs")
 ```
-
-### Installation using `drat`
-
-While using `install_github()` works just fine, it would be nicer to be
-able to just type `install.packages("nycdogs")` or
-`update.packages("nycdogs")` in the ordinary way. We can do this using
-Dirk Eddelbuettel’s
-[drat](http://eddelbuettel.github.io/drat/DratForPackageUsers.html)
-package. Drat provides a convenient way to make R aware of package
-repositories other than CRAN.
-
-First, install `drat`:
-
-``` r
-if (!require("drat")) {
-    install.packages("drat")
-    library("drat")
-}
-```
-
-Then use `drat` to tell R about the repository where `nycdogs` is
-hosted:
-
-``` r
-drat::addRepo("kjhealy")
-```
-
-You can now install `nycdogs`:
-
-``` r
-install.packages("nycdogs")
-```
-
-To ensure that the `nycdogs` repository is always available, you can add
-the following line to your `.Rprofile` or `.Rprofile.site` file:
-
-``` r
-drat::addRepo("kjhealy")
-```
-
-With that in place you’ll be able to do `install.packages("nycdogs")` or
-`update.packages("nycdogs")` and have everything work as you’d expect.
-
-Note that the drat repository only contains data packages that are not
-on CRAN, so you will never be in danger of grabbing the wrong version of
-any other package.
 
 ## Loading the data
 
@@ -86,20 +36,18 @@ mapping.
 
 ``` r
 library(tidyverse)
-#> ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
-#> ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-#> ✓ tibble  3.1.6     ✓ dplyr   1.0.7
-#> ✓ tidyr   1.1.4     ✓ stringr 1.4.0
-#> ✓ readr   2.1.1     ✓ forcats 0.5.1
+#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#> ✔ dplyr     1.1.4     ✔ readr     2.1.5
+#> ✔ forcats   1.0.0     ✔ stringr   1.5.1
+#> ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+#> ✔ purrr     1.0.2     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> x readr::edition_get()   masks testthat::edition_get()
-#> x dplyr::filter()        masks stats::filter()
-#> x purrr::is_null()       masks testthat::is_null()
-#> x dplyr::lag()           masks stats::lag()
-#> x readr::local_edition() masks testthat::local_edition()
-#> x dplyr::matches()       masks tidyr::matches(), testthat::matches()
-library(sf)
-#> Linking to GEOS 3.9.1, GDAL 3.2.3, PROJ 7.2.1; sf_use_s2() is TRUE
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+library(sf) # this is required!
+#> Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
 ```
 
 Load the data:
@@ -125,8 +73,9 @@ nyc_license
 #>  8 Chewbacca   F                          2012 Labrador (or Cr… Manhat…    10013
 #>  9 Heidi-Bo    F                          2007 Dachshund Smoot… Brookl…    11215
 #> 10 Massimo     M                          2009 Bull Dog, French Brookl…    11201
-#> # … with 493,062 more rows, and 3 more variables: license_issued_date <date>,
-#> #   license_expired_date <date>, extract_year <dbl>
+#> # ℹ 493,062 more rows
+#> # ℹ 3 more variables: license_issued_date <date>, license_expired_date <date>,
+#> #   extract_year <dbl>
 ```
 
 ## Example
@@ -135,6 +84,7 @@ You can use the `nyc_zips` object to create a map of, for example, where
 dogs with a particular name live:
 
 ``` r
+
 boro_names <- c("Manhattan", "Queens", "Brooklyn", 
                 "Bronx", "Staten Island")
 
@@ -154,7 +104,7 @@ nyc_coco <- nyc_license %>%
 nyc_coco
 #> # A tibble: 191 × 5
 #>    zip_code animal_name     n    freq   pct
-#>       <int> <chr>       <dbl>   <dbl> <dbl>
+#>       <int> <chr>       <int>   <dbl> <dbl>
 #>  1    10001 Coco            8 0.00932  0.93
 #>  2    10002 Coco            7 0.00816  0.82
 #>  3    10003 Coco            5 0.00583  0.58
@@ -165,10 +115,10 @@ nyc_coco
 #>  8    10009 Coco            8 0.00932  0.93
 #>  9    10010 Coco            9 0.0105   1.05
 #> 10    10011 Coco           10 0.0117   1.17
-#> # … with 181 more rows
+#> # ℹ 181 more rows
 
 coco_map <- left_join(nyc_zips, nyc_coco)
-#> Joining, by = "zip_code"
+#> Joining with `by = join_by(zip_code)`
 
 ## Map theme
 theme_nymap <- function(base_size=9, base_family="") {
@@ -198,6 +148,15 @@ coco_map %>% ggplot(mapping = aes(fill = pct)) +
     theme_nymap() + 
     guides(fill = guide_bins(title.position = "top", 
                                label.position = "bottom")) 
+#> Loading required package: grid
+#> Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
+#> 3.5.0.
+#> ℹ Please use the `legend.position.inside` argument of `theme()` instead.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> Warning: Ignoring unknown arguments to `guide_bins()`: `title.position` and
+#> `label.position`.
 ```
 
 <img src="man/figures/README-mapexample-1.png" width="100%" />

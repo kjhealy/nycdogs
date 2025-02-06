@@ -1,6 +1,6 @@
 Package: nycdogs
 Title: New York City dog licenses and bite incidents by zip code
-Version: 0.1.2
+Version: 0.1.4
 Authors@R: 
     person(given = "Kieran",
            family = "Healy",
