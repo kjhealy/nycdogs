@@ -74,15 +74,15 @@ You can use the `nyc_zips` object to create a map of, for example, where dogs wi
 boro_names <- c("Manhattan", "Queens", "Brooklyn", 
                 "Bronx", "Staten Island")
 
-nyc_coco <- nyc_license %>%
+nyc_coco <- nyc_license |>
   filter(extract_year == 2016, 
-         borough %in% boro_names) %>% 
-  group_by(zip_code, animal_name) %>% 
-  tally() %>%
-  ungroup() %>%
+         borough %in% boro_names) |> 
+  group_by(zip_code, animal_name) |> 
+  tally() |>
+  ungroup() |>
   complete(zip_code, animal_name, 
-           fill = list(n = 0)) %>% 
-  filter(animal_name == "Coco") %>% 
+           fill = list(n = 0)) |> 
+  filter(animal_name == "Coco") |> 
   mutate(freq = n / sum(n),
            pct = round(freq*100, 2)) 
 
@@ -110,8 +110,8 @@ theme_nymap <- function(base_size=9, base_family="") {
         )
 }
 
-coco_map %>% ggplot(mapping = aes(fill = pct)) +
-    geom_sf(color = "gray80", size = 0.1) +
+coco_map |> ggplot(mapping = aes(fill = pct)) +
+    geom_sf(color = "gray80", linewidth = 0.1) +
     scale_fill_binned(guide = "bins", type = "viridis", option = "A") +
     labs(fill = "Percent of all NYC\ndogs named Coco") +
   annotate(geom = "text", x = -74.145, y = 40.85, 
