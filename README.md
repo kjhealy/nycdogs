@@ -134,7 +134,8 @@ theme_nymap <- function(base_size=9, base_family="") {
               panel.spacing=unit(0, "lines"),
               plot.background=element_blank(),
               legend.justification = c(0,0),
-              legend.position = c(0.1, 0.6), 
+              legend.position = "inside",
+              legend.position.inside = c(0.1, 0.7), 
               legend.direction = "horizontal"
         )
 }
@@ -143,20 +144,10 @@ coco_map |> ggplot(mapping = aes(fill = pct)) +
     geom_sf(color = "gray80", linewidth = 0.1) +
     scale_fill_binned(guide = "bins", type = "viridis", option = "A") +
     labs(fill = "Percent of all NYC\ndogs named Coco") +
-  annotate(geom = "text", x = -74.145, y = 40.85, 
+  annotate(geom = "text", x = -74.16, y = 40.84, 
            label = "Where's Coco?", size = 6) + 
-    theme_nymap() + 
-    guides(fill = guide_bins(title.position = "top", 
-                               label.position = "bottom")) 
+    theme_nymap() 
 #> Loading required package: grid
-#> Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
-#> 3.5.0.
-#> ℹ Please use the `legend.position.inside` argument of `theme()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-#> generated.
-#> Warning: Ignoring unknown arguments to `guide_bins()`: `title.position` and
-#> `label.position`.
 ```
 
 <img src="man/figures/README-mapexample-1.png" width="100%" />
