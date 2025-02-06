@@ -116,7 +116,9 @@ nyc_coco
 #>  9    10010 Coco            9 0.0105   1.05
 #> 10    10011 Coco           10 0.0117   1.17
 #> # ℹ 181 more rows
+```
 
+``` r
 coco_map <- left_join(nyc_zips, nyc_coco)
 #> Joining with `by = join_by(zip_code)`
 
@@ -135,7 +137,7 @@ theme_nymap <- function(base_size=9, base_family="") {
               plot.background=element_blank(),
               legend.justification = c(0,0),
               legend.position = "inside",
-              legend.position.inside = c(0.1, 0.7), 
+              legend.position.inside = c(0, 0.7), 
               legend.direction = "horizontal"
         )
 }
@@ -150,4 +152,4 @@ coco_map |> ggplot(mapping = aes(fill = pct)) +
 #> Loading required package: grid
 ```
 
-<img src="man/figures/README-mapexample-1.png" width="100%" />
+<img src="man/figures/README-mapexample-2-1.png" width="100%" />
