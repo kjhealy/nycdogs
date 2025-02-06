@@ -70,6 +70,11 @@ nyc_license
 You can use the `nyc_zips` object to create a map of, for example, where dogs with a particular name live:
 
 ```{r mapexample-1}
+#| fig.caption = "Distribution of Dogs Named Coco", 
+#| dpi = 300, 
+#| fig.width = 8,
+#| fig.height = 8
+
 
 boro_names <- c("Manhattan", "Queens", "Brooklyn", 
                 "Bronx", "Staten Island")
@@ -88,14 +93,6 @@ nyc_coco <- nyc_license |>
 
 
 nyc_coco
-```
-
-```{r}
-#| mapexample-2, 
-#| fig.caption = "Distribution of Dogs Named Coco", 
-#| dpi = 300, 
-#| fig.width = 8,
-#| fig.height = 8
 
 coco_map <- left_join(nyc_zips, nyc_coco)
 
