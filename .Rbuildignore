@@ -10,3 +10,4 @@
 ^tmp.r$
 ^.github$
 ^data-raw$
+^\.github$
