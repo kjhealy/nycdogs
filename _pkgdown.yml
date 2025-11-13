@@ -2,18 +2,34 @@ destination: docs
 authors:
   Kieran Healy:
     href: http://kieranhealy.org
+
+url: https://kjhealy.github.io/nycdogs
+
 template:
-  params:
-    bootswatch: cosmo
+  bootstrap: 5
+  bslib:
+    base_font: {google: "IBM Plex Sans"}
+    heading_font: {google: "IBM Plex Sans"}
+    code_font: {google: "IBM Plex Mono"}
+
 reference:
-  - title: "Datasets"
-    desc: >
-      Included datasets.
+  - title: "Data"
+    desc: Datasets provided.
     contents:
-      - nyc_license
       - nyc_bites
-      - nyc_zips
+      - nyc_license
+
 navbar:
   right:
    - icon: fa-github
      href: https://github.com/kjhealy/nycdogs
+
+figures:
+  dev: grDevices::png
+  dpi: 200
+  dev.args: []
+  fig.ext: png
+  fig.width: 7.2916667
+  fig.height: ~
+  fig.retina: 2
+  fig.asp: 1.618

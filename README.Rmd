@@ -10,39 +10,27 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   out.width = "100%"
-  )
-
-get_badge <- function (pkg, type = c("last-month", "last-week", "grand-total"), 
-    color = "green") 
-{
-    type <- match.arg(type)
-    svg <- paste0("http://cranlogs.r-pkg.org/badges/", type, 
-        "/", pkg, "?color=", color)
-    url <- paste0("https://cran.r-project.org/package=", pkg)
-    placeholder <- "CRAN link"
-    paste0("[![](", svg, ")](", url, ")")
-}
+)
 ```
 
-# nycdogs <img src="man/figures/nycdogs.png" align="right" width="240" />
+# nycdogs
 
 <!-- badges: start -->
-[![R build
-status](https://github.com/kjhealy/nycdogs/workflows/R-CMD-check/badge.svg)](https://github.com/kjhealy/nycdogs/actions)
-
 <!-- badges: end -->
 
-
-The `nycdogs` package contains three datasets, `nyc_license`, `nyc_bites`, and `nyc_zips`. They contain, respectively, data on all licensed dogs in New York city, data on reported dog bites in New York city, and geographical data for New York city at the zip code level.
-
+The goal of nycdogs is to ...
 
 ## Installation
 
 `nycdogs` is a data package, bundling several datasets into a convenient format. The relatively large size of the data in the package means it is not suitable for hosting on [CRAN](https://cran.r-project.org/), the core R package repository. Install the package from [GitHub](https://github.com/kjhealy/nycdogs) with:
 
 ``` r
-remotes::install_github("kjhealy/nycdogs")
+# install.packages("pak")
+pak::pak("kjhealy/nycdogs")
 ```
+
+The `nycdogs` package contains two datasets, `nyc_license` and `nyc_bites`. They contain, respectively, data on all licensed dogs in New York city (current), and data on reported dog bites in New York city (older data). It also re-exports objects fron [`nyczips`](https://kjhealy.github.com/nyczips) to make it easier to draw maps of the data.
+
 
 ## Loading the data
 
@@ -50,7 +38,7 @@ The package works best with the [tidyverse](http://tidyverse.org/) libraries and
 
 ```{r libs}
 library(tidyverse)
-library(sf) # this is required!
+library(sf) 
 ```
 
 Load the data:
@@ -67,7 +55,7 @@ nyc_license
 
 ## Example
 
-You can use the `nyc_zips` object to create a map of, for example, where dogs with a particular name live:
+Where dogs with a particular name live:
 
 ```{r mapexample-1}
 #| fig.caption = "Distribution of Dogs Named Coco", 
@@ -80,12 +68,11 @@ boro_names <- c("Manhattan", "Queens", "Brooklyn",
                 "Bronx", "Staten Island")
 
 nyc_coco <- nyc_license |>
-  filter(extract_year == 2016, 
-         borough %in% boro_names) |> 
-  group_by(zip_code, animal_name) |> 
+  filter(borough %in% boro_names) |> 
+  group_by(zip, animal_name) |> 
   tally() |>
   ungroup() |>
-  complete(zip_code, animal_name, 
+  complete(zip, animal_name, 
            fill = list(n = 0)) |> 
   filter(animal_name == "Coco") |> 
   mutate(freq = n / sum(n),
@@ -94,7 +81,8 @@ nyc_coco <- nyc_license |>
 
 nyc_coco
 
-coco_map <- left_join(nyc_zips, nyc_coco)
+## nyc_zip_sf is from the nyczips package, which is automatically loaded by nycdogs.
+coco_map <- left_join(nyc_zip_sf, nyc_coco)
 
 ## Map theme
 theme_nymap <- function(base_size=9, base_family="") {

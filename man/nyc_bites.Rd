@@ -4,7 +4,8 @@
 \name{nyc_bites}
 \alias{nyc_bites}
 \title{New York City Dog Reported Dog bites}
-\format{A tibble containing 8,707 rows and 11 columns
+\format{
+A tibble containing 10,280 rows and 11 columns
 \describe{
 \item{\code{uniqueid}}{Incident identified.}
 \item{\code{date_of_bite}}{Date of bite.}
@@ -16,8 +17,9 @@
 \item{\code{borough}}{Borough where bite occurred.}
 \item{\code{zip_code}}{Zip code where bite occurred.}
 \item{\code{year}}{Year}
-\item{\code{breed_rc}}{Recoded breed (simplier caegories)}
-}}
+\item{\code{breed_rc}}{Recoded breed variable with aggregated breed categories)}
+}
+}
 \source{
 New York City public data
 }
@@ -25,7 +27,7 @@ New York City public data
 nyc_bites
 }
 \description{
-Reported dog bite incidents in New York city between April 10th
-2014 and January 25th 2018.
+Reported dog bite incidents in New York city between January 1st 2015
+and Decenber 31st 2017,
 }
 \keyword{datasets}

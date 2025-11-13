@@ -3,31 +3,38 @@
 \docType{data}
 \name{nyc_license}
 \alias{nyc_license}
-\title{Licensed Dogs in New York City as of January 1st 2017}
-\format{A tibble containing 122,203 rows and 14 columns
+\title{Dogs of New York}
+\format{
+## `nyc_license`
+A data frame with 722,864 rows and 12 columns:
 \describe{
-\item{\code{animal_name}}{Name of dog.}
-\item{\code{animal_gender}}{Sex of dog.}
-\item{\code{animal_birth_month}}{Birth month.}
-\item{\code{breed_rc}}{Breed of dog (simplier categories).}
-\item{\code{borough}}{Borough of owner.}
-\item{\code{zip_code}}{Zip code of owner.}
-\item{\code{community_district}}{Community district of owner}
-\item{\code{nta}}{Neighborhood Tabulation Area.}
-\item{\code{city_council_district}}{City council district.}
-\item{\code{congressional_district}}{Congressional district}
-\item{\code{state_senatorial_district}}{State Senatorial district}
-\item{\code{license_issued_date}}{Date license issued}
-\item{\code{license_expired_date}}{Date license expired}
-}}
+  \item{animal_name}{Name of dog}
+  \item{animal_gender}{Sex of dog}
+  \item{animal_birth_year}{Year dog was born}
+  \item{breed_name}{Dog breed}
+  \item{breed_rc}{Lightly recoded breed}
+  \item{zip_code}{Owner zip code. Same as zip, retained for compatibility with nyc_bites.}
+  \item{zip}{Owner zip code}
+  \item{license_issued_date}{Date license issued.}
+  \item{license_expired_date}{Date license expires.}
+  \item{extract_year}{Year this record was queried.}
+  \item{borough}{Borough of Owner. (Some zip codes are in more than one borough but here are counted only once.)}
+  \item{city}{Nominal city, based on zip code.}
+}
+}
 \source{
-New York City Public Data
+Sourced from NYC Open Data <https://data.cityofnewyork.us/Health/NYC-Dog-Licensing-Dataset/nu7n-tubp>
 }
 \usage{
 nyc_license
 }
 \description{
-Dogs in New York city with licenses issued between
-September 12th 2014 and December 31st 2016.
+Active Dog Licenses in New York City as of February 2025.
+}
+\details{
+he data is sourced from the DOHMH Dog Licensing System (https://a816-healthpsi.nyc.gov/DogLicense), where owners can apply for and renew dog licenses. Each record represents a unique dog license that was active during the year, but not necessarily a unique record per dog, since a license that is renewed during the year results in a separate record of an active license period. Each record stands as a unique license period for the dog over the course of the yearlong time frame.
+}
+\author{
+Kieran Healy
 }
 \keyword{datasets}

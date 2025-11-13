@@ -1,19 +1,13 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# nycdogs <img src="man/figures/nycdogs.png" align="right" width="240" />
+# nycdogs
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/kjhealy/nycdogs/workflows/R-CMD-check/badge.svg)](https://github.com/kjhealy/nycdogs/actions)
-
 <!-- badges: end -->
 
-The `nycdogs` package contains three datasets, `nyc_license`,
-`nyc_bites`, and `nyc_zips`. They contain, respectively, data on all
-licensed dogs in New York city, data on reported dog bites in New York
-city, and geographical data for New York city at the zip code level.
+The goal of nycdogs is to …
 
 ## Installation
 
@@ -24,8 +18,16 @@ core R package repository. Install the package from
 [GitHub](https://github.com/kjhealy/nycdogs) with:
 
 ``` r
-remotes::install_github("kjhealy/nycdogs")
+# install.packages("pak")
+pak::pak("kjhealy/nycdogs")
 ```
+
+The `nycdogs` package contains two datasets, `nyc_license` and
+`nyc_bites`. They contain, respectively, data on all licensed dogs in
+New York city (current), and data on reported dog bites in New York city
+(older data). It also re-exports objects fron
+[`nyczips`](https://kjhealy.github.com/nyczips) to make it easier to
+draw maps of the data.
 
 ## Loading the data
 
@@ -38,50 +40,50 @@ mapping.
 library(tidyverse)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.5
-#> ✔ forcats   1.0.0     ✔ stringr   1.5.1
-#> ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
+#> ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
 #> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-#> ✔ purrr     1.0.2     
+#> ✔ purrr     1.2.0     
 #> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 #> ✖ dplyr::filter() masks stats::filter()
 #> ✖ dplyr::lag()    masks stats::lag()
 #> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-library(sf) # this is required!
-#> Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
+library(sf) 
+#> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 ```
 
 Load the data:
 
 ``` r
 library(nycdogs)
+#> Loading required package: nyczips
 ```
 
 To look at the tibble that contains the licensing data, do this:
 
 ``` r
 nyc_license
-#> # A tibble: 493,072 × 9
-#>    animal_name animal_gender animal_birth_year breed_rc         borough zip_code
-#>    <chr>       <chr>                     <dbl> <chr>            <chr>      <int>
-#>  1 Paige       F                          2014 Pit Bull (or Mi… Manhat…    10035
-#>  2 Yogi        M                          2010 Boxer            Bronx      10465
-#>  3 Ali         M                          2014 Basenji          Manhat…    10013
-#>  4 Queen       F                          2013 Akita Crossbreed Manhat…    10013
-#>  5 Lola        F                          2009 Maltese          Manhat…    10028
-#>  6 Ian         M                          2006 Unknown          Manhat…    10013
-#>  7 Buddy       M                          2008 Unknown          Manhat…    10025
-#>  8 Chewbacca   F                          2012 Labrador (or Cr… Manhat…    10013
-#>  9 Heidi-Bo    F                          2007 Dachshund Smoot… Brookl…    11215
-#> 10 Massimo     M                          2009 Bull Dog, French Brookl…    11201
-#> # ℹ 493,062 more rows
-#> # ℹ 3 more variables: license_issued_date <date>, license_expired_date <date>,
-#> #   extract_year <dbl>
+#> # A tibble: 722,864 × 12
+#>    animal_name animal_gender animal_birth_year breed_name      breed_rc zip_code
+#>    <chr>       <chr>                     <int> <chr>           <chr>    <chr>   
+#>  1 Paige       F                          2014 American Pit B… Pit Bul… 10035   
+#>  2 Yogi        M                          2010 Boxer           Boxer    10465   
+#>  3 Ali         M                          2014 Basenji         Basenji  10013   
+#>  4 Queen       F                          2013 Akita Crossbre… Akita C… 10013   
+#>  5 Lola        F                          2009 Maltese         Maltese  10028   
+#>  6 Ian         M                          2006 Unknown         Unknown  10013   
+#>  7 Buddy       M                          2008 Unknown         Unknown  10025   
+#>  8 Chewbacca   F                          2012 Labrador Retri… Labrado… 10013   
+#>  9 Heidi-bo    F                          2007 Dachshund Smoo… Dachshu… 11215   
+#> 10 Massimo     M                          2009 Bull Dog, Fren… Bull Do… 11201   
+#> # ℹ 722,854 more rows
+#> # ℹ 6 more variables: zip <chr>, license_issued_date <date>,
+#> #   license_expired_date <date>, extract_year <int>, borough <chr>, city <chr>
 ```
 
 ## Example
 
-You can use the `nyc_zips` object to create a map of, for example, where
-dogs with a particular name live:
+Where dogs with a particular name live:
 
 ``` r
 
@@ -89,12 +91,11 @@ boro_names <- c("Manhattan", "Queens", "Brooklyn",
                 "Bronx", "Staten Island")
 
 nyc_coco <- nyc_license |>
-  filter(extract_year == 2016, 
-         borough %in% boro_names) |> 
-  group_by(zip_code, animal_name) |> 
+  filter(borough %in% boro_names) |> 
+  group_by(zip, animal_name) |> 
   tally() |>
   ungroup() |>
-  complete(zip_code, animal_name, 
+  complete(zip, animal_name, 
            fill = list(n = 0)) |> 
   filter(animal_name == "Coco") |> 
   mutate(freq = n / sum(n),
@@ -102,23 +103,24 @@ nyc_coco <- nyc_license |>
 
 
 nyc_coco
-#> # A tibble: 191 × 5
-#>    zip_code animal_name     n    freq   pct
-#>       <int> <chr>       <int>   <dbl> <dbl>
-#>  1    10001 Coco            8 0.00932  0.93
-#>  2    10002 Coco            7 0.00816  0.82
-#>  3    10003 Coco            5 0.00583  0.58
-#>  4    10004 Coco            1 0.00117  0.12
-#>  5    10005 Coco            1 0.00117  0.12
-#>  6    10006 Coco            0 0        0   
-#>  7    10007 Coco            3 0.00350  0.35
-#>  8    10009 Coco            8 0.00932  0.93
-#>  9    10010 Coco            9 0.0105   1.05
-#> 10    10011 Coco           10 0.0117   1.17
-#> # ℹ 181 more rows
+#> # A tibble: 196 × 5
+#>    zip   animal_name     n     freq   pct
+#>    <chr> <chr>       <int>    <dbl> <dbl>
+#>  1 10001 Coco           52 0.00960   0.96
+#>  2 10002 Coco           61 0.0113    1.13
+#>  3 10003 Coco           22 0.00406   0.41
+#>  4 10004 Coco            2 0.000369  0.04
+#>  5 10005 Coco            5 0.000923  0.09
+#>  6 10006 Coco            0 0         0   
+#>  7 10007 Coco           25 0.00462   0.46
+#>  8 10009 Coco           50 0.00923   0.92
+#>  9 10010 Coco           57 0.0105    1.05
+#> 10 10011 Coco           58 0.0107    1.07
+#> # ℹ 186 more rows
 
-coco_map <- left_join(nyc_zips, nyc_coco)
-#> Joining with `by = join_by(zip_code)`
+## nyc_zip_sf is from the nyczips package, which is automatically loaded by nycdogs.
+coco_map <- left_join(nyc_zip_sf, nyc_coco)
+#> Joining with `by = join_by(zip)`
 
 ## Map theme
 theme_nymap <- function(base_size=9, base_family="") {
