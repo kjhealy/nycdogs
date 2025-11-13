@@ -1,4 +1,4 @@
-# nycdogs
+# nycdogs ![](reference/figures/nycdogs.png)
 
 ## Installation
 
