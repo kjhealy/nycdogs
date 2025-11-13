@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# nycdogs
+# nycdogs <img src="man/figures/nycdogs.png" align="right" width="360">
 
 <!-- badges: start -->
 
