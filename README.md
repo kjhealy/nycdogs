@@ -10,10 +10,7 @@
 
 ## Installation
 
-`nycdogs` is a data package, bundling several datasets into a convenient
-format. The relatively large size of the data in the package means it is
-not suitable for hosting on [CRAN](https://cran.r-project.org/), the
-core R package repository. Install the package from
+`nycdogs` is a data package. Install the package from
 [GitHub](https://github.com/kjhealy/nycdogs) with:
 
 ``` r
@@ -24,7 +21,7 @@ pak::pak("kjhealy/nycdogs")
 The `nycdogs` package contains two datasets, `nyc_license` and
 `nyc_bites`. They contain, respectively, data on all licensed dogs in
 New York city (current), and data on reported dog bites in New York city
-(older data). It also re-exports objects fron
+(older data). It also re-exports objects from
 [`nyczips`](https://kjhealy.github.com/nyczips) to make it easier to
 draw maps of the data.
 
