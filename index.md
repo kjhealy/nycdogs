@@ -26,17 +26,7 @@ mapping.
 
 ``` r
 library(tidyverse)
-#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.1.4     ✔ readr     2.1.5
-#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
-#> ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
-#> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-#> ✔ purrr     1.2.0     
-#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
-#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-library(sf) 
+library(sf)
 #> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 ```
 
@@ -75,19 +65,19 @@ Where dogs with a particular name live:
 
 ``` r
 
-boro_names <- c("Manhattan", "Queens", "Brooklyn", 
+boro_names <- c("Manhattan", "Queens", "Brooklyn",
                 "Bronx", "Staten Island")
 
 nyc_coco <- nyc_license |>
-  filter(borough %in% boro_names) |> 
-  group_by(zip, animal_name) |> 
+  filter(borough %in% boro_names) |>
+  group_by(zip, animal_name) |>
   tally() |>
   ungroup() |>
-  complete(zip, animal_name, 
-           fill = list(n = 0)) |> 
-  filter(animal_name == "Coco") |> 
+  complete(zip, animal_name,
+           fill = list(n = 0)) |>
+  filter(animal_name == "Coco") |>
   mutate(freq = n / sum(n),
-           pct = round(freq*100, 2)) 
+           pct = round(freq*100, 2))
 
 
 nyc_coco
@@ -125,7 +115,7 @@ theme_nymap <- function(base_size=9, base_family="") {
               plot.background=element_blank(),
               legend.justification = c(0,0),
               legend.position = "inside",
-              legend.position.inside = c(0, 0.7), 
+              legend.position.inside = c(0, 0.7),
               legend.direction = "horizontal"
         )
 }
@@ -134,10 +124,12 @@ coco_map |> ggplot(mapping = aes(fill = pct)) +
     geom_sf(color = "gray80", linewidth = 0.1) +
     scale_fill_binned(guide = "bins", type = "viridis", option = "A") +
     labs(fill = "Percent of all NYC\ndogs named Coco") +
-  annotate(geom = "text", x = -74.16, y = 40.84, 
-           label = "Where's Coco?", size = 6) + 
-    theme_nymap() 
+  annotate(geom = "text", x = -74.16, y = 40.84,
+           label = "Where's Coco?", size = 6) +
+    theme_nymap()
 #> Loading required package: grid
 ```
 
 ![](reference/figures/README-mapexample-1-1.png)
+
+Hex photo: Detail from Elliott Erwitt, “New York City, 1974”.
