@@ -22,7 +22,7 @@
 #' @keywords datasets
 #' @name nyc_bites
 #' @source New York City public data
-'nyc_bites'
+"nyc_bites"
 
 
 #' Dogs of New York

@@ -37,7 +37,7 @@ The package works best with the [tidyverse](http://tidyverse.org/) libraries and
 
 ```{r libs}
 library(tidyverse)
-library(sf) 
+library(sf)
 ```
 
 Load the data:
@@ -57,25 +57,25 @@ nyc_license
 Where dogs with a particular name live:
 
 ```{r mapexample-1}
-#| fig.caption = "Distribution of Dogs Named Coco", 
-#| dpi = 300, 
+#| fig.caption = "Distribution of Dogs Named Coco",
+#| dpi = 300,
 #| fig.width = 8,
 #| fig.height = 8
 
 
-boro_names <- c("Manhattan", "Queens", "Brooklyn", 
+boro_names <- c("Manhattan", "Queens", "Brooklyn",
                 "Bronx", "Staten Island")
 
 nyc_coco <- nyc_license |>
-  filter(borough %in% boro_names) |> 
-  group_by(zip, animal_name) |> 
+  filter(borough %in% boro_names) |>
+  group_by(zip, animal_name) |>
   tally() |>
   ungroup() |>
-  complete(zip, animal_name, 
-           fill = list(n = 0)) |> 
-  filter(animal_name == "Coco") |> 
+  complete(zip, animal_name,
+           fill = list(n = 0)) |>
+  filter(animal_name == "Coco") |>
   mutate(freq = n / sum(n),
-           pct = round(freq*100, 2)) 
+           pct = round(freq*100, 2))
 
 
 nyc_coco
@@ -98,7 +98,7 @@ theme_nymap <- function(base_size=9, base_family="") {
               plot.background=element_blank(),
               legend.justification = c(0,0),
               legend.position = "inside",
-              legend.position.inside = c(0, 0.7), 
+              legend.position.inside = c(0, 0.7),
               legend.direction = "horizontal"
         )
 }
@@ -107,9 +107,11 @@ coco_map |> ggplot(mapping = aes(fill = pct)) +
     geom_sf(color = "gray80", linewidth = 0.1) +
     scale_fill_binned(guide = "bins", type = "viridis", option = "A") +
     labs(fill = "Percent of all NYC\ndogs named Coco") +
-  annotate(geom = "text", x = -74.16, y = 40.84, 
-           label = "Where's Coco?", size = 6) + 
-    theme_nymap() 
-  
+  annotate(geom = "text", x = -74.16, y = 40.84,
+           label = "Where's Coco?", size = 6) +
+    theme_nymap()
+
 
 ```
+
+Hex photo: Detail from Elliott Erwitt, "New York City, 1974".
