@@ -10,6 +10,19 @@
 pak::pak("kjhealy/nycdogs")
 ```
 
+Alternatively, install it from my
+[r-universe](https://kjhealy.r-universe.dev):
+
+``` r
+install.packages(
+  "nycdogs",
+  repos = c("https://kjhealy.r-universe.dev", "https://cloud.r-project.org")
+)
+```
+
+Including `https://cloud.r-project.org` ensures dependencies on CRAN are
+resolved automatically.
+
 The `nycdogs` package contains two datasets, `nyc_license` and
 `nyc_bites`. They contain, respectively, data on all licensed dogs in
 New York city (current), and data on reported dog bites in New York city
@@ -26,6 +39,16 @@ mapping.
 
 ``` r
 library(tidyverse)
+#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#> ✔ dplyr     1.2.1     ✔ readr     2.2.0
+#> ✔ forcats   1.0.1     ✔ stringr   1.6.0
+#> ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+#> ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+#> ✔ purrr     1.2.1     
+#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
+#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 library(sf)
 #> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 ```
