@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/kjhealy/nycdogs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kjhealy/nycdogs/actions/workflows/R-CMD-check.yaml)
+[![R-universe version](https://kjhealy.r-universe.dev/nycdogs/badges/version)](https://kjhealy.r-universe.dev/nycdogs)
 <!-- badges: end -->
 
 ## Installation
@@ -27,6 +28,17 @@ knitr::opts_chunk$set(
 # install.packages("pak")
 pak::pak("kjhealy/nycdogs")
 ```
+
+Alternatively, install it from my [r-universe](https://kjhealy.r-universe.dev):
+
+```r
+install.packages(
+  "nycdogs",
+  repos = c("https://kjhealy.r-universe.dev", "https://cloud.r-project.org")
+)
+```
+
+Including `https://cloud.r-project.org` ensures dependencies on CRAN are resolved automatically.
 
 The `nycdogs` package contains two datasets, `nyc_license` and `nyc_bites`. They contain, respectively, data on all licensed dogs in New York city (current), and data on reported dog bites in New York city (older data). It also re-exports objects from [`nyczips`](https://kjhealy.github.com/nyczips) to make it easier to draw maps of the data.
 
