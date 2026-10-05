@@ -1,7 +1,7 @@
-# New York City Dog Reported Dog bites
+# Reported dog bites in New York City
 
-Reported dog bite incidents in New York city between January 1st 2015
-and Decenber 31st 2017,
+Reported dog bite incidents in New York City between January 1st 2015
+and December 31st 2017.
 
 ## Usage
 
@@ -11,52 +11,58 @@ nyc_bites
 
 ## Format
 
-A tibble containing 10,280 rows and 11 columns
+### `nyc_bites`
 
-- `uniqueid`:
+A tibble with 10,280 rows and 11 columns:
 
-  Incident identified.
+- unique_id:
 
-- `date_of_bite`:
+  Incident identifier.
+
+- date_of_bite:
 
   Date of bite.
 
-- `species`:
+- species:
 
   Species of animal (all "Dog").
 
-- `breed`:
+- breed:
 
   Breed of dog.
 
-- `age`:
+- age:
 
-  Age of dog.
+  Age of dog, as reported. Character.
 
-- `gender`:
+- gender:
 
-  Sex of dog.
+  Sex of dog: "M", "F", or "U" (unknown).
 
-- `spay_neuter`:
+- spay_neuter:
 
-  Spayed or neutered (True/False)
+  Whether the dog was spayed or neutered.
 
-- `borough`:
+- borough:
 
-  Borough where bite occurred.
+  Borough where bite occurred. Includes "Other".
 
-- `zip_code`:
+- zip_code:
 
-  Zip code where bite occurred.
+  Zip code where bite occurred. Integer.
 
-- `year`:
+- year:
 
-  Year
+  Year of bite.
 
-- `breed_rc`:
+- breed_rc:
 
-  Recoded breed variable with aggregated breed categories)
+  Recoded breed variable with aggregated breed categories.
 
 ## Source
 
-New York City public data
+New York City Open Data.
+
+## Author
+
+Kieran Healy

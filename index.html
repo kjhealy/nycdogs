@@ -5,16 +5,16 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>New York City dog licenses and bite incidents by zip code • nycdogs</title>
+<title>New York City Dog Licenses and Bite Incidents by Zip Code • nycdogs</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/IBM_Plex_Sans-0.4.10/font.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/IBM_Plex_Sans-0.4.10/font.css" rel="stylesheet">
 <link href="deps/IBM_Plex_Mono-0.4.10/font.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="New York City dog licenses and bite incidents by zip code">
-<meta name="description" content="A data package containing three data sets covering dog ownership in New York City.">
-<meta property="og:description" content="A data package containing three data sets covering dog ownership in New York City.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="New York City Dog Licenses and Bite Incidents by Zip Code">
+<meta name="description" content="A data package containing two datasets on dogs in New York City: active dog licenses from the Department of Health and Mental Hygiene, and reported dog bite incidents.">
+<meta property="og:description" content="A data package containing two datasets on dogs in New York City: active dog licenses from the Department of Health and Mental Hygiene, and reported dog bite incidents.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="index.html">nycdogs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/kjhealy/nycdogs"><span class="fa fa-github"></span></a></li>
@@ -63,7 +64,7 @@
 <span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://kjhealy.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Including <code>https://cloud.r-project.org</code> ensures dependencies on CRAN are resolved automatically.</p>
-<p>The <code>nycdogs</code> package contains two datasets, <code>nyc_license</code> and <code>nyc_bites</code>. They contain, respectively, data on all licensed dogs in New York city (current), and data on reported dog bites in New York city (older data). It also re-exports objects from <a href="https://kjhealy.github.com/nyczips" class="external-link"><code>nyczips</code></a> to make it easier to draw maps of the data.</p>
+<p>The <code>nycdogs</code> package contains two datasets, <code>nyc_license</code> and <code>nyc_bites</code>. They contain, respectively, data on all licensed dogs in New York city (current to 2026), and data on reported dog bites in New York city (older data). It depends on <a href="https://kjhealy.github.io/nycmaps/" class="external-link"><code>nycmaps</code></a>, which is attached automatically and provides the zip code table and map used to draw maps of the data.</p>
 </div>
 <div class="section level2">
 <h2 id="loading-the-data">Loading the data<a class="anchor" aria-label="anchor" href="#loading-the-data"></a>
@@ -74,9 +75,9 @@
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
 <span><span class="co">#&gt; ✔ dplyr     1.2.1     ✔ readr     2.2.0</span></span>
 <span><span class="co">#&gt; ✔ forcats   1.0.1     ✔ stringr   1.6.0</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   4.0.2     ✔ tibble    3.3.1</span></span>
+<span><span class="co">#&gt; ✔ ggplot2   4.0.3     ✔ tibble    3.3.1</span></span>
 <span><span class="co">#&gt; ✔ lubridate 1.9.5     ✔ tidyr     1.3.2</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.2.1     </span></span>
+<span><span class="co">#&gt; ✔ purrr     1.2.2     </span></span>
 <span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
 <span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
@@ -85,12 +86,12 @@
 <span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</span></span></code></pre></div>
 <p>Load the data:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kjhealy/nycdogs" class="external-link">nycdogs</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: nyczips</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kjhealy.github.io/nycdogs/">nycdogs</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: nycmaps</span></span></code></pre></div>
 <p>To look at the tibble that contains the licensing data, do this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_license</span></span>
-<span><span class="co">#&gt; # A tibble: 722,864 × 12</span></span>
+<span><span class="co">#&gt; # A tibble: 819,323 × 12</span></span>
 <span><span class="co">#&gt;    animal_name animal_gender animal_birth_year breed_name      breed_rc zip_code</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;   </span></span>
 <span><span class="co">#&gt;  1 Paige       F                          2014 American Pit B… Pit Bul… 10035   </span></span>
@@ -102,8 +103,8 @@
 <span><span class="co">#&gt;  7 Buddy       M                          2008 Unknown         Unknown  10025   </span></span>
 <span><span class="co">#&gt;  8 Chewbacca   F                          2012 Labrador Retri… Labrado… 10013   </span></span>
 <span><span class="co">#&gt;  9 Heidi-bo    F                          2007 Dachshund Smoo… Dachshu… 11215   </span></span>
-<span><span class="co">#&gt; 10 Massimo     M                          2009 Bull Dog, Fren… Bull Do… 11201   </span></span>
-<span><span class="co">#&gt; # ℹ 722,854 more rows</span></span>
+<span><span class="co">#&gt; 10 Massimo     M                          2009 Bull Dog, Fren… French … 11201   </span></span>
+<span><span class="co">#&gt; # ℹ 819,313 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 6 more variables: zip &lt;chr&gt;, license_issued_date &lt;date&gt;,</span></span>
 <span><span class="co">#&gt; #   license_expired_date &lt;date&gt;, extract_year &lt;int&gt;, borough &lt;chr&gt;, city &lt;chr&gt;</span></span></code></pre></div>
 </div>
@@ -129,24 +130,23 @@
 <span></span>
 <span></span>
 <span><span class="va">nyc_coco</span></span>
-<span><span class="co">#&gt; # A tibble: 196 × 5</span></span>
+<span><span class="co">#&gt; # A tibble: 197 × 5</span></span>
 <span><span class="co">#&gt;    zip   animal_name     n     freq   pct</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 10001 Coco           52 0.00960   0.96</span></span>
-<span><span class="co">#&gt;  2 10002 Coco           61 0.0113    1.13</span></span>
-<span><span class="co">#&gt;  3 10003 Coco           22 0.00406   0.41</span></span>
-<span><span class="co">#&gt;  4 10004 Coco            2 0.000369  0.04</span></span>
-<span><span class="co">#&gt;  5 10005 Coco            5 0.000923  0.09</span></span>
+<span><span class="co">#&gt;  1 10001 Coco           58 0.00936   0.94</span></span>
+<span><span class="co">#&gt;  2 10002 Coco           74 0.0119    1.19</span></span>
+<span><span class="co">#&gt;  3 10003 Coco           24 0.00387   0.39</span></span>
+<span><span class="co">#&gt;  4 10004 Coco            2 0.000323  0.03</span></span>
+<span><span class="co">#&gt;  5 10005 Coco            6 0.000969  0.1 </span></span>
 <span><span class="co">#&gt;  6 10006 Coco            0 0         0   </span></span>
-<span><span class="co">#&gt;  7 10007 Coco           25 0.00462   0.46</span></span>
-<span><span class="co">#&gt;  8 10009 Coco           50 0.00923   0.92</span></span>
-<span><span class="co">#&gt;  9 10010 Coco           57 0.0105    1.05</span></span>
-<span><span class="co">#&gt; 10 10011 Coco           58 0.0107    1.07</span></span>
-<span><span class="co">#&gt; # ℹ 186 more rows</span></span>
+<span><span class="co">#&gt;  7 10007 Coco           30 0.00484   0.48</span></span>
+<span><span class="co">#&gt;  8 10009 Coco           60 0.00969   0.97</span></span>
+<span><span class="co">#&gt;  9 10010 Coco           63 0.0102    1.02</span></span>
+<span><span class="co">#&gt; 10 10011 Coco           63 0.0102    1.02</span></span>
+<span><span class="co">#&gt; # ℹ 187 more rows</span></span>
 <span></span>
-<span><span class="co">## nyc_zip_sf is from the nyczips package, which is automatically loaded by nycdogs.</span></span>
-<span><span class="va">coco_map</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">nyc_zip_sf</span>, <span class="va">nyc_coco</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Joining with `by = join_by(zip)`</span></span>
+<span><span class="co">## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.</span></span>
+<span><span class="va">coco_map</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">nyc_zip_sf</span>, <span class="va">nyc_coco</span>, by <span class="op">=</span> <span class="fu">join_by</span><span class="op">(</span><span class="va">zip</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Map theme</span></span>
 <span><span class="va">theme_nymap</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_size</span><span class="op">=</span><span class="fl">9</span>, <span class="va">base_family</span><span class="op">=</span><span class="st">""</span><span class="op">)</span> <span class="op">{</span></span>
@@ -174,9 +174,15 @@
 <span>    <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Percent of all NYC\ndogs named Coco"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">annotate</span><span class="op">(</span>geom <span class="op">=</span> <span class="st">"text"</span>, x <span class="op">=</span> <span class="op">-</span><span class="fl">74.16</span>, y <span class="op">=</span> <span class="fl">40.84</span>,</span>
 <span>           label <span class="op">=</span> <span class="st">"Where's Coco?"</span>, size <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co">## The map is in EPSG:2263; the annotation is positioned by lon/lat</span></span>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span>default_crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="fl">4326</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">theme_nymap</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: grid</span></span></code></pre></div>
-<p><img src="reference/figures/README-mapexample-1-1.png" alt="" width="100%"></p>
+<div class="figure">
+<img src="reference/figures/README-mapexample-1-1.png" alt="Distribution of Dogs Named Coco" width="100%"><p class="caption">
+Distribution of Dogs Named Coco
+</p>
+</div>
 <p>Hex photo: Detail from Elliott Erwitt, “New York City, 1974”.</p>
 </div>
 </div>
@@ -208,7 +214,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="http://kieranhealy.org" class="external-link">Kieran Healy</a> <br><small class="roles"> Author, maintainer </small>   </li>
+<a href="http://kieranhealy.org" class="external-link">Kieran Healy</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/https://orcid.org/0000-0001-9114-981X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 
@@ -229,7 +235,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
