@@ -80,10 +80,48 @@
 #' The lookup table used is in `data-raw/breed_recodes.csv` in the package
 #' source.
 #'
-#' Other than this the data is deliberately lightly cleaned. Owner-provided values are kept
-#' as reported, including placeholder names (e.g. "Unknown", "Name not
-#' provided"), implausible birth years, malformed zip codes, and exact
-#' duplicate rows.
+#' Other than this the data is deliberately lightly cleaned. Owner-provided
+#' values are kept as reported, including placeholder names (e.g. "Unknown",
+#' "Name not provided"), implausible birth years, and malformed zip codes.
+#'
+#' ## Licenses, dogs, and duplicate records
+#'
+#' Two features of the data matter for any analysis.
+#'
+#' First, dog licenses expire. Each row is a record of a time-limited license
+#' that was issued, not necessarily the record of a unique individual dog. A
+#' dog whose license is renewed appears once for each license period.
+#'
+#' Second, the table contains several extracts of the licensing data, marked
+#' by the `extract_year` column. A license that was active in more than one
+#' extract year appears in each of them, so there are a substantial number of
+#' duplicated rows. About 155,000 of the 819,323 rows repeat an earlier
+#' record.
+#'
+#' Any analysis of the table should try to de-duplicate the records. For
+#' example, arrange the data by extract year, find distinct records based on a
+#' number of the identifying columns, and keep only one of them (here, the
+#' earliest):
+#'
+#' ```r
+#' nyc_license |>
+#'   dplyr::arrange(extract_year) |>
+#'   dplyr::distinct(
+#'     animal_name,
+#'     animal_gender,
+#'     animal_birth_year,
+#'     breed_name,
+#'     zip,
+#'     license_issued_date,
+#'     license_expired_date,
+#'     .keep_all = TRUE
+#'   )
+#' ```
+#'
+#' This leaves one row per license. To count dogs and not licenses, drop the
+#' two license date columns from the call to `distinct()`. There is no dog
+#' identifier in the data, so this is approximate: two dogs with the same name,
+#' sex, birth year, and breed in the same zip code cannot be told apart.
 #'
 #' @author Kieran Healy
 #' @source NYC Open Data <https://data.cityofnewyork.us/Health/NYC-Dog-Licensing-Dataset/nu7n-tubp>,

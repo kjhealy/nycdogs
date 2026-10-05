@@ -64,9 +64,53 @@ To look at the tibble that contains the licensing data, do this:
 nyc_license
 ```
 
+## Licenses, dogs, and duplicate records
+
+Two features of the data matter for any analysis.
+
+First, dog licenses expire. Each row in `nyc_license` is a record of a time-limited license that was issued, not necessarily the record of a unique individual dog. A dog whose license is renewed appears once for each license period.
+
+Second, the table contains several extracts of the licensing data, marked by the `extract_year` column. A license that was active in more than one extract year appears in each of them, so there are a substantial number of duplicated rows.
+
+Any analysis of the table should try to de-duplicate the records. For example, arrange the data by extract year, find distinct records based on a number of the identifying columns, and keep only one of them (here, the earliest):
+
+```{r dedupe}
+nyc_license |>
+  arrange(extract_year) |>
+  distinct(
+    animal_name,
+    animal_gender,
+    animal_birth_year,
+    breed_name,
+    zip,
+    license_issued_date,
+    license_expired_date,
+    .keep_all = TRUE
+  )
+```
+
+This leaves one row per license. To count dogs and not licenses, drop the two license date columns from the call to `distinct()`. There is no dog identifier in the data, so this is approximate: two dogs with the same name, sex, birth year, and breed in the same zip code cannot be told apart.
+
 ## Example
 
-Where dogs with a particular name live:
+Where dogs with a particular name live. We want to count dogs and not licenses, so we first de-duplicate the table, leaving the license dates out of the identifying columns:
+
+```{r dogs}
+nyc_dogs <- nyc_license |>
+  arrange(extract_year) |>
+  distinct(
+    animal_name,
+    animal_gender,
+    animal_birth_year,
+    breed_name,
+    zip,
+    .keep_all = TRUE
+  )
+
+nyc_dogs
+```
+
+Then we find the share of dogs named Coco that live in each zip code, and map it:
 
 ```{r mapexample-1}
 #| fig.cap = "Distribution of Dogs Named Coco",
@@ -74,21 +118,17 @@ Where dogs with a particular name live:
 #| fig.width = 8,
 #| fig.height = 8
 
+boro_names <- c("Manhattan", "Queens", "Brooklyn", "Bronx", "Staten Island")
 
-boro_names <- c("Manhattan", "Queens", "Brooklyn",
-                "Bronx", "Staten Island")
-
-nyc_coco <- nyc_license |>
+nyc_coco <- nyc_dogs |>
   filter(borough %in% boro_names) |>
-  group_by(zip, animal_name) |>
-  tally() |>
-  ungroup() |>
-  complete(zip, animal_name,
-           fill = list(n = 0)) |>
+  count(zip, animal_name) |>
+  complete(zip, animal_name, fill = list(n = 0)) |>
   filter(animal_name == "Coco") |>
-  mutate(freq = n / sum(n),
-           pct = round(freq*100, 2))
-
+  mutate(
+    freq = n / sum(n),
+    pct = round(freq * 100, 2)
+  )
 
 nyc_coco
 

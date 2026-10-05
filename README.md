@@ -93,41 +93,129 @@ nyc_license
 #> #   license_expired_date <date>, extract_year <int>, borough <chr>, city <chr>
 ```
 
-## Example
+## Licenses, dogs, and duplicate records
 
-Where dogs with a particular name live:
+Two features of the data matter for any analysis.
+
+First, dog licenses expire. Each row in `nyc_license` is a record of a
+time-limited license that was issued, not necessarily the record of a
+unique individual dog. A dog whose license is renewed appears once for
+each license period.
+
+Second, the table contains several extracts of the licensing data,
+marked by the `extract_year` column. A license that was active in more
+than one extract year appears in each of them, so there are a
+substantial number of duplicated rows.
+
+Any analysis of the table should try to de-duplicate the records. For
+example, arrange the data by extract year, find distinct records based
+on a number of the identifying columns, and keep only one of them (here,
+the earliest):
 
 ``` r
+nyc_license |>
+  arrange(extract_year) |>
+  distinct(
+    animal_name,
+    animal_gender,
+    animal_birth_year,
+    breed_name,
+    zip,
+    license_issued_date,
+    license_expired_date,
+    .keep_all = TRUE
+  )
+#> # A tibble: 664,044 × 12
+#>    animal_name animal_gender animal_birth_year breed_name      breed_rc zip_code
+#>    <chr>       <chr>                     <int> <chr>           <chr>    <chr>   
+#>  1 Paige       F                          2014 American Pit B… Pit Bul… 10035   
+#>  2 Yogi        M                          2010 Boxer           Boxer    10465   
+#>  3 Ali         M                          2014 Basenji         Basenji  10013   
+#>  4 Queen       F                          2013 Akita Crossbre… Akita C… 10013   
+#>  5 Lola        F                          2009 Maltese         Maltese  10028   
+#>  6 Ian         M                          2006 Unknown         Unknown  10013   
+#>  7 Buddy       M                          2008 Unknown         Unknown  10025   
+#>  8 Chewbacca   F                          2012 Labrador Retri… Labrado… 10013   
+#>  9 Heidi-bo    F                          2007 Dachshund Smoo… Dachshu… 11215   
+#> 10 Massimo     M                          2009 Bull Dog, Fren… French … 11201   
+#> # ℹ 664,034 more rows
+#> # ℹ 6 more variables: zip <chr>, license_issued_date <date>,
+#> #   license_expired_date <date>, extract_year <int>, borough <chr>, city <chr>
+```
 
-boro_names <- c("Manhattan", "Queens", "Brooklyn",
-                "Bronx", "Staten Island")
+This leaves one row per license. To count dogs and not licenses, drop
+the two license date columns from the call to `distinct()`. There is no
+dog identifier in the data, so this is approximate: two dogs with the
+same name, sex, birth year, and breed in the same zip code cannot be
+told apart.
 
-nyc_coco <- nyc_license |>
+## Example
+
+Where dogs with a particular name live. We want to count dogs and not
+licenses, so we first de-duplicate the table, leaving the license dates
+out of the identifying columns:
+
+``` r
+nyc_dogs <- nyc_license |>
+  arrange(extract_year) |>
+  distinct(
+    animal_name,
+    animal_gender,
+    animal_birth_year,
+    breed_name,
+    zip,
+    .keep_all = TRUE
+  )
+
+nyc_dogs
+#> # A tibble: 357,664 × 12
+#>    animal_name animal_gender animal_birth_year breed_name      breed_rc zip_code
+#>    <chr>       <chr>                     <int> <chr>           <chr>    <chr>   
+#>  1 Paige       F                          2014 American Pit B… Pit Bul… 10035   
+#>  2 Yogi        M                          2010 Boxer           Boxer    10465   
+#>  3 Ali         M                          2014 Basenji         Basenji  10013   
+#>  4 Queen       F                          2013 Akita Crossbre… Akita C… 10013   
+#>  5 Lola        F                          2009 Maltese         Maltese  10028   
+#>  6 Ian         M                          2006 Unknown         Unknown  10013   
+#>  7 Buddy       M                          2008 Unknown         Unknown  10025   
+#>  8 Chewbacca   F                          2012 Labrador Retri… Labrado… 10013   
+#>  9 Heidi-bo    F                          2007 Dachshund Smoo… Dachshu… 11215   
+#> 10 Massimo     M                          2009 Bull Dog, Fren… French … 11201   
+#> # ℹ 357,654 more rows
+#> # ℹ 6 more variables: zip <chr>, license_issued_date <date>,
+#> #   license_expired_date <date>, extract_year <int>, borough <chr>, city <chr>
+```
+
+Then we find the share of dogs named Coco that live in each zip code,
+and map it:
+
+``` r
+boro_names <- c("Manhattan", "Queens", "Brooklyn", "Bronx", "Staten Island")
+
+nyc_coco <- nyc_dogs |>
   filter(borough %in% boro_names) |>
-  group_by(zip, animal_name) |>
-  tally() |>
-  ungroup() |>
-  complete(zip, animal_name,
-           fill = list(n = 0)) |>
+  count(zip, animal_name) |>
+  complete(zip, animal_name, fill = list(n = 0)) |>
   filter(animal_name == "Coco") |>
-  mutate(freq = n / sum(n),
-           pct = round(freq*100, 2))
-
+  mutate(
+    freq = n / sum(n),
+    pct = round(freq * 100, 2)
+  )
 
 nyc_coco
 #> # A tibble: 197 × 5
 #>    zip   animal_name     n     freq   pct
 #>    <chr> <chr>       <int>    <dbl> <dbl>
-#>  1 10001 Coco           58 0.00936   0.94
-#>  2 10002 Coco           74 0.0119    1.19
-#>  3 10003 Coco           24 0.00387   0.39
-#>  4 10004 Coco            2 0.000323  0.03
-#>  5 10005 Coco            6 0.000969  0.1 
+#>  1 10001 Coco           21 0.00820   0.82
+#>  2 10002 Coco           31 0.0121    1.21
+#>  3 10003 Coco           12 0.00469   0.47
+#>  4 10004 Coco            2 0.000781  0.08
+#>  5 10005 Coco            4 0.00156   0.16
 #>  6 10006 Coco            0 0         0   
-#>  7 10007 Coco           30 0.00484   0.48
-#>  8 10009 Coco           60 0.00969   0.97
-#>  9 10010 Coco           63 0.0102    1.02
-#> 10 10011 Coco           63 0.0102    1.02
+#>  7 10007 Coco            7 0.00273   0.27
+#>  8 10009 Coco           32 0.0125    1.25
+#>  9 10010 Coco           27 0.0105    1.05
+#> 10 10011 Coco           28 0.0109    1.09
 #> # ℹ 187 more rows
 
 ## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.
