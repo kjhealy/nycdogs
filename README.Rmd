@@ -40,7 +40,7 @@ install.packages(
 
 Including `https://cloud.r-project.org` ensures dependencies on CRAN are resolved automatically.
 
-The `nycdogs` package contains two datasets, `nyc_license` and `nyc_bites`. They contain, respectively, data on all licensed dogs in New York city (current), and data on reported dog bites in New York city (older data). It also re-exports objects from [`nyczips`](https://kjhealy.github.com/nyczips) to make it easier to draw maps of the data.
+The `nycdogs` package contains two datasets, `nyc_license` and `nyc_bites`. They contain, respectively, data on all licensed dogs in New York city (current to 2026), and data on reported dog bites in New York city (older data). It depends on [`nycmaps`](https://kjhealy.github.io/nycmaps/), which is attached automatically and provides the zip code table and map used to draw maps of the data.
 
 
 ## Loading the data
@@ -69,7 +69,7 @@ nyc_license
 Where dogs with a particular name live:
 
 ```{r mapexample-1}
-#| fig.caption = "Distribution of Dogs Named Coco",
+#| fig.cap = "Distribution of Dogs Named Coco",
 #| dpi = 300,
 #| fig.width = 8,
 #| fig.height = 8
@@ -92,8 +92,8 @@ nyc_coco <- nyc_license |>
 
 nyc_coco
 
-## nyc_zip_sf is from the nyczips package, which is automatically loaded by nycdogs.
-coco_map <- left_join(nyc_zip_sf, nyc_coco)
+## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.
+coco_map <- left_join(nyc_zip_sf, nyc_coco, by = join_by(zip))
 
 ## Map theme
 theme_nymap <- function(base_size=9, base_family="") {
@@ -121,6 +121,8 @@ coco_map |> ggplot(mapping = aes(fill = pct)) +
     labs(fill = "Percent of all NYC\ndogs named Coco") +
   annotate(geom = "text", x = -74.16, y = 40.84,
            label = "Where's Coco?", size = 6) +
+  ## The map is in EPSG:2263; the annotation is positioned by lon/lat
+  coord_sf(default_crs = sf::st_crs(4326)) +
     theme_nymap()
 
 

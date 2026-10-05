@@ -3,31 +3,37 @@
 \docType{data}
 \name{nyc_bites}
 \alias{nyc_bites}
-\title{New York City Dog Reported Dog bites}
+\title{Reported dog bites in New York City}
 \format{
-A tibble containing 10,280 rows and 11 columns
+\subsection{\code{nyc_bites}}{
+
+A tibble with 10,280 rows and 11 columns:
 \describe{
-\item{\code{uniqueid}}{Incident identified.}
-\item{\code{date_of_bite}}{Date of bite.}
-\item{\code{species}}{Species of animal (all "Dog").}
-\item{\code{breed}}{Breed of dog.}
-\item{\code{age}}{Age of dog.}
-\item{\code{gender}}{Sex of dog.}
-\item{\code{spay_neuter}}{Spayed or neutered (True/False)}
-\item{\code{borough}}{Borough where bite occurred.}
-\item{\code{zip_code}}{Zip code where bite occurred.}
-\item{\code{year}}{Year}
-\item{\code{breed_rc}}{Recoded breed variable with aggregated breed categories)}
+\item{unique_id}{Incident identifier.}
+\item{date_of_bite}{Date of bite.}
+\item{species}{Species of animal (all "Dog").}
+\item{breed}{Breed of dog.}
+\item{age}{Age of dog, as reported. Character.}
+\item{gender}{Sex of dog: "M", "F", or "U" (unknown).}
+\item{spay_neuter}{Whether the dog was spayed or neutered.}
+\item{borough}{Borough where bite occurred. Includes "Other".}
+\item{zip_code}{Zip code where bite occurred. Integer.}
+\item{year}{Year of bite.}
+\item{breed_rc}{Recoded breed variable with aggregated breed categories.}
+}
 }
 }
 \source{
-New York City public data
+New York City Open Data.
 }
 \usage{
 nyc_bites
 }
 \description{
-Reported dog bite incidents in New York city between January 1st 2015
-and Decenber 31st 2017,
+Reported dog bite incidents in New York City between January 1st 2015
+and December 31st 2017.
+}
+\author{
+Kieran Healy
 }
 \keyword{datasets}
