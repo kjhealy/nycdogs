@@ -109,40 +109,104 @@
 <span><span class="co">#&gt; #   license_expired_date &lt;date&gt;, extract_year &lt;int&gt;, borough &lt;chr&gt;, city &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
+<h2 id="licenses-dogs-and-duplicate-records">Licenses, dogs, and duplicate records<a class="anchor" aria-label="anchor" href="#licenses-dogs-and-duplicate-records"></a>
+</h2>
+<p>Two features of the data matter for any analysis.</p>
+<p>First, dog licenses expire. Each row in <code>nyc_license</code> is a record of a time-limited license that was issued, not necessarily the record of a unique individual dog. A dog whose license is renewed appears once for each license period.</p>
+<p>Second, the table contains several extracts of the licensing data, marked by the <code>extract_year</code> column. A license that was active in more than one extract year appears in each of them, so there are a substantial number of duplicated rows.</p>
+<p>Any analysis of the table should try to de-duplicate the records. For example, arrange the data by extract year, find distinct records based on a number of the identifying columns, and keep only one of them (here, the earliest):</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nyc_license</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">extract_year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">distinct</span><span class="op">(</span></span>
+<span>    <span class="va">animal_name</span>,</span>
+<span>    <span class="va">animal_gender</span>,</span>
+<span>    <span class="va">animal_birth_year</span>,</span>
+<span>    <span class="va">breed_name</span>,</span>
+<span>    <span class="va">zip</span>,</span>
+<span>    <span class="va">license_issued_date</span>,</span>
+<span>    <span class="va">license_expired_date</span>,</span>
+<span>    .keep_all <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 664,044 × 12</span></span>
+<span><span class="co">#&gt;    animal_name animal_gender animal_birth_year breed_name      breed_rc zip_code</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1 Paige       F                          2014 American Pit B… Pit Bul… 10035   </span></span>
+<span><span class="co">#&gt;  2 Yogi        M                          2010 Boxer           Boxer    10465   </span></span>
+<span><span class="co">#&gt;  3 Ali         M                          2014 Basenji         Basenji  10013   </span></span>
+<span><span class="co">#&gt;  4 Queen       F                          2013 Akita Crossbre… Akita C… 10013   </span></span>
+<span><span class="co">#&gt;  5 Lola        F                          2009 Maltese         Maltese  10028   </span></span>
+<span><span class="co">#&gt;  6 Ian         M                          2006 Unknown         Unknown  10013   </span></span>
+<span><span class="co">#&gt;  7 Buddy       M                          2008 Unknown         Unknown  10025   </span></span>
+<span><span class="co">#&gt;  8 Chewbacca   F                          2012 Labrador Retri… Labrado… 10013   </span></span>
+<span><span class="co">#&gt;  9 Heidi-bo    F                          2007 Dachshund Smoo… Dachshu… 11215   </span></span>
+<span><span class="co">#&gt; 10 Massimo     M                          2009 Bull Dog, Fren… French … 11201   </span></span>
+<span><span class="co">#&gt; # ℹ 664,034 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: zip &lt;chr&gt;, license_issued_date &lt;date&gt;,</span></span>
+<span><span class="co">#&gt; #   license_expired_date &lt;date&gt;, extract_year &lt;int&gt;, borough &lt;chr&gt;, city &lt;chr&gt;</span></span></code></pre></div>
+<p>This leaves one row per license. To count dogs and not licenses, drop the two license date columns from the call to <code>distinct()</code>. There is no dog identifier in the data, so this is approximate: two dogs with the same name, sex, birth year, and breed in the same zip code cannot be told apart.</p>
+</div>
+<div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Where dogs with a particular name live:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">boro_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Manhattan"</span>, <span class="st">"Queens"</span>, <span class="st">"Brooklyn"</span>,</span>
-<span>                <span class="st">"Bronx"</span>, <span class="st">"Staten Island"</span><span class="op">)</span></span>
+<p>Where dogs with a particular name live. We want to count dogs and not licenses, so we first de-duplicate the table, leaving the license dates out of the identifying columns:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nyc_dogs</span> <span class="op">&lt;-</span> <span class="va">nyc_license</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">extract_year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">distinct</span><span class="op">(</span></span>
+<span>    <span class="va">animal_name</span>,</span>
+<span>    <span class="va">animal_gender</span>,</span>
+<span>    <span class="va">animal_birth_year</span>,</span>
+<span>    <span class="va">breed_name</span>,</span>
+<span>    <span class="va">zip</span>,</span>
+<span>    .keep_all <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
-<span><span class="va">nyc_coco</span> <span class="op">&lt;-</span> <span class="va">nyc_license</span> <span class="op">|&gt;</span></span>
+<span><span class="va">nyc_dogs</span></span>
+<span><span class="co">#&gt; # A tibble: 357,664 × 12</span></span>
+<span><span class="co">#&gt;    animal_name animal_gender animal_birth_year breed_name      breed_rc zip_code</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1 Paige       F                          2014 American Pit B… Pit Bul… 10035   </span></span>
+<span><span class="co">#&gt;  2 Yogi        M                          2010 Boxer           Boxer    10465   </span></span>
+<span><span class="co">#&gt;  3 Ali         M                          2014 Basenji         Basenji  10013   </span></span>
+<span><span class="co">#&gt;  4 Queen       F                          2013 Akita Crossbre… Akita C… 10013   </span></span>
+<span><span class="co">#&gt;  5 Lola        F                          2009 Maltese         Maltese  10028   </span></span>
+<span><span class="co">#&gt;  6 Ian         M                          2006 Unknown         Unknown  10013   </span></span>
+<span><span class="co">#&gt;  7 Buddy       M                          2008 Unknown         Unknown  10025   </span></span>
+<span><span class="co">#&gt;  8 Chewbacca   F                          2012 Labrador Retri… Labrado… 10013   </span></span>
+<span><span class="co">#&gt;  9 Heidi-bo    F                          2007 Dachshund Smoo… Dachshu… 11215   </span></span>
+<span><span class="co">#&gt; 10 Massimo     M                          2009 Bull Dog, Fren… French … 11201   </span></span>
+<span><span class="co">#&gt; # ℹ 357,654 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: zip &lt;chr&gt;, license_issued_date &lt;date&gt;,</span></span>
+<span><span class="co">#&gt; #   license_expired_date &lt;date&gt;, extract_year &lt;int&gt;, borough &lt;chr&gt;, city &lt;chr&gt;</span></span></code></pre></div>
+<p>Then we find the share of dogs named Coco that live in each zip code, and map it:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">boro_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Manhattan"</span>, <span class="st">"Queens"</span>, <span class="st">"Brooklyn"</span>, <span class="st">"Bronx"</span>, <span class="st">"Staten Island"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nyc_coco</span> <span class="op">&lt;-</span> <span class="va">nyc_dogs</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">borough</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">boro_names</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">zip</span>, <span class="va">animal_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tally</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">complete</span><span class="op">(</span><span class="va">zip</span>, <span class="va">animal_name</span>,</span>
-<span>           fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">count</span><span class="op">(</span><span class="va">zip</span>, <span class="va">animal_name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">complete</span><span class="op">(</span><span class="va">zip</span>, <span class="va">animal_name</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">animal_name</span> <span class="op">==</span> <span class="st">"Coco"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>freq <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
-<span>           pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">freq</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    freq <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
+<span>    pct <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">freq</span> <span class="op">*</span> <span class="fl">100</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">nyc_coco</span></span>
 <span><span class="co">#&gt; # A tibble: 197 × 5</span></span>
 <span><span class="co">#&gt;    zip   animal_name     n     freq   pct</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;       &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 10001 Coco           58 0.00936   0.94</span></span>
-<span><span class="co">#&gt;  2 10002 Coco           74 0.0119    1.19</span></span>
-<span><span class="co">#&gt;  3 10003 Coco           24 0.00387   0.39</span></span>
-<span><span class="co">#&gt;  4 10004 Coco            2 0.000323  0.03</span></span>
-<span><span class="co">#&gt;  5 10005 Coco            6 0.000969  0.1 </span></span>
+<span><span class="co">#&gt;  1 10001 Coco           21 0.00820   0.82</span></span>
+<span><span class="co">#&gt;  2 10002 Coco           31 0.0121    1.21</span></span>
+<span><span class="co">#&gt;  3 10003 Coco           12 0.00469   0.47</span></span>
+<span><span class="co">#&gt;  4 10004 Coco            2 0.000781  0.08</span></span>
+<span><span class="co">#&gt;  5 10005 Coco            4 0.00156   0.16</span></span>
 <span><span class="co">#&gt;  6 10006 Coco            0 0         0   </span></span>
-<span><span class="co">#&gt;  7 10007 Coco           30 0.00484   0.48</span></span>
-<span><span class="co">#&gt;  8 10009 Coco           60 0.00969   0.97</span></span>
-<span><span class="co">#&gt;  9 10010 Coco           63 0.0102    1.02</span></span>
-<span><span class="co">#&gt; 10 10011 Coco           63 0.0102    1.02</span></span>
+<span><span class="co">#&gt;  7 10007 Coco            7 0.00273   0.27</span></span>
+<span><span class="co">#&gt;  8 10009 Coco           32 0.0125    1.25</span></span>
+<span><span class="co">#&gt;  9 10010 Coco           27 0.0105    1.05</span></span>
+<span><span class="co">#&gt; 10 10011 Coco           28 0.0109    1.09</span></span>
 <span><span class="co">#&gt; # ℹ 187 more rows</span></span>
 <span></span>
 <span><span class="co">## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.</span></span>

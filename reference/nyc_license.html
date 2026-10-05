@@ -129,10 +129,43 @@ Crossbreed" are all "Terrier Crossbreed".</p></li>
 left as they are.</p></li>
 </ul><p>The lookup table used is in <code>data-raw/breed_recodes.csv</code> in the package
 source.</p>
-<p>Other than this the data is deliberately lightly cleaned. Owner-provided values are kept
-as reported, including placeholder names (e.g. "Unknown", "Name not
-provided"), implausible birth years, malformed zip codes, and exact
-duplicate rows.</p>
+<p>Other than this the data is deliberately lightly cleaned. Owner-provided
+values are kept as reported, including placeholder names (e.g. "Unknown",
+"Name not provided"), implausible birth years, and malformed zip codes.</p><div class="section">
+<h3 id="licenses-dogs-and-duplicate-records">Licenses, dogs, and duplicate records<a class="anchor" aria-label="anchor" href="#licenses-dogs-and-duplicate-records"></a></h3>
+
+
+<p>Two features of the data matter for any analysis.</p>
+<p>First, dog licenses expire. Each row is a record of a time-limited license
+that was issued, not necessarily the record of a unique individual dog. A
+dog whose license is renewed appears once for each license period.</p>
+<p>Second, the table contains several extracts of the licensing data, marked
+by the <code>extract_year</code> column. A license that was active in more than one
+extract year appears in each of them, so there are a substantial number of
+duplicated rows. About 155,000 of the 819,323 rows repeat an earlier
+record.</p>
+<p>Any analysis of the table should try to de-duplicate the records. For
+example, arrange the data by extract year, find distinct records based on a
+number of the identifying columns, and keep only one of them (here, the
+earliest):</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">nyc_license</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">arrange</span><span class="op">(</span><span class="va">extract_year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu">distinct</span><span class="op">(</span></span>
+<span>    <span class="va">animal_name</span>,</span>
+<span>    <span class="va">animal_gender</span>,</span>
+<span>    <span class="va">animal_birth_year</span>,</span>
+<span>    <span class="va">breed_name</span>,</span>
+<span>    <span class="va">zip</span>,</span>
+<span>    <span class="va">license_issued_date</span>,</span>
+<span>    <span class="va">license_expired_date</span>,</span>
+<span>    .keep_all <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p>This leaves one row per license. To count dogs and not licenses, drop the
+two license date columns from the call to <code>distinct()</code>. There is no dog
+identifier in the data, so this is approximate: two dogs with the same name,
+sex, birth year, and breed in the same zip code cannot be told apart.</p>
+</div>
+
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
