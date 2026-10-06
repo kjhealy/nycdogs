@@ -4,12 +4,6 @@ source(here::here("data-raw", "_shared.R"))
 
 license_file <- here("data-raw", "NYC_Dog_Licensing_Dataset_20261005.csv")
 
-## Hand-curated recodes for variant, abbreviated, and misspelled breed names
-breed_recodes <- read_csv(
-  here("data-raw", "breed_recodes.csv"),
-  col_types = "cc"
-)
-
 ## The birth year column has some spreadsheet errors in place of a value
 nyc_license_raw <- read_csv(
   license_file,

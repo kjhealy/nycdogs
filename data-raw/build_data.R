@@ -1,8 +1,10 @@
 ## Build data objects
 
-# `nyc_bites` has no processing script. Its .rda file is kept as is.
+# Remove all .rda files in data/ and regenerate them
+fs::dir_ls(here::here("data"), glob = "*.rda") |> fs::file_delete()
 
 # Build data objects
+source(here::here("data-raw", "nyc_bites.R"))
 source(here::here("data-raw", "nyc_license.R"))
 
 # Documentation in _documentation isn't generated automatically. If the data

@@ -36,7 +36,9 @@ resolved automatically.
 The `nycdogs` package contains two datasets, `nyc_license` and
 `nyc_bites`. They contain, respectively, data on all licensed dogs in
 New York city (current to 2026), and data on reported dog bites in New
-York city (older data). It depends on
+York city (2015 to 2025). Both tables have a `breed_rc` column of
+recoded breed names that is coded in the same way, so that breeds can be
+compared across them. It depends on
 [`nycmaps`](https://kjhealy.github.io/nycmaps/), which is attached
 automatically and provides the zip code table and map used to draw maps
 of the data.

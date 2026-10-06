@@ -7,31 +7,64 @@
 \format{
 \subsection{\code{nyc_bites}}{
 
-A tibble with 10,280 rows and 11 columns:
+A tibble with 39,082 rows and 12 columns:
 \describe{
-\item{unique_id}{Incident identifier.}
+\item{unique_id}{Dog bite case identifier. Unique within \code{year}, but not
+across the whole table. See Details.}
 \item{date_of_bite}{Date of bite.}
-\item{species}{Species of animal (all "Dog").}
-\item{breed}{Breed of dog.}
-\item{age}{Age of dog, as reported. Character.}
-\item{gender}{Sex of dog: "M", "F", or "U" (unknown).}
-\item{spay_neuter}{Whether the dog was spayed or neutered.}
-\item{borough}{Borough where bite occurred. Includes "Other".}
-\item{zip_code}{Zip code where bite occurred. Integer.}
 \item{year}{Year of bite.}
-\item{breed_rc}{Recoded breed variable with aggregated breed categories.}
+\item{species}{Species of animal (all "Dog").}
+\item{breed}{Breed of dog, as reported. Whitespace and capitalization are
+standardized. \code{NA} where no breed was recorded.}
+\item{breed_rc}{Recoded breed, coded in the same way as \code{breed_rc} in
+\link{nyc_license}. See Details.}
+\item{age}{Age of dog at time of bite, as reported. Character. Mostly
+years. Numbers with "M" indicate months, but many other formats appear.}
+\item{gender}{Sex of dog: "M" (male), "F" (female), or "U" (unknown).}
+\item{spay_neuter}{\code{TRUE} if the dog was reported to DOHMH as spayed or
+neutered. \code{FALSE} if it was not, or if this is unknown.}
+\item{borough}{Borough where the bite occurred. "Other" indicates that the
+bite took place outside New York City.}
+\item{zip_code}{Zip code where the bite occurred. Character. \code{NA} where
+not available. Same as \code{zip}.}
+\item{zip}{Zip code where the bite occurred.}
 }
 }
 }
 \source{
-New York City Open Data.
+NYC Open Data \url{https://data.cityofnewyork.us/Health/DOHMH-Dog-Bite-Data/rsgh-akpg},
+retrieved October 6th 2026.
 }
 \usage{
 nyc_bites
 }
 \description{
-Reported dog bite incidents in New York City between January 1st 2015
-and December 31st 2017.
+Dog bite incidents reported to the Department of Health and Mental Hygiene
+(DOHMH) between January 1st 2015 and December 31st 2025.
+}
+\details{
+Section 11.03 of the NYC Health Code requires all animal bites to be
+reported within 24 hours of the event. Data is collected from reports
+received online, by mail, by fax, or by phone to 311 or the DOHMH Animal
+Bite Unit. Each record represents a single dog bite incident. Information
+on breed, age, gender, and spayed or neutered status has not been verified
+by DOHMH and is listed only as reported.
+
+\code{unique_id} is not unique across the table. The source data combines
+several releases, and the identifier starts again from 1 in each of them:
+once for 2015--2017, once for 2018--2021, and once for each year from 2022.
+The combination of \code{year} and \code{unique_id} is unique.
+
+\code{breed_rc} is made with the same lookup table and rules as \code{breed_rc} in
+\link{nyc_license}, so that breeds can be compared across the two tables.
+Reports that only describe a mixed-breed dog (e.g. "Mixed/Other", "Large
+Mixed Breed") are coded "Mixed Breed", and reports with no usable breed
+(e.g. "Uncertain", "Small Dog") are coded "Unknown". Free-text
+descriptions of two or more breeds are left as they are, so \code{breed_rc} has
+a long tail of rare values that do not appear in \link{nyc_license}.
+
+Other than this the data is deliberately lightly cleaned. Values of \code{age}
+and \code{zip_code} are kept as reported, including malformed ones.
 }
 \author{
 Kieran Healy
