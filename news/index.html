@@ -39,7 +39,14 @@
 <li>
 <code>nyc_license$breed_rc</code> is recoded much more thoroughly. Inverted names are reordered (<code>"Bull Dog, French"</code> is <code>"French Bulldog"</code>), varieties are collapsed to their breed (<code>"Dachshund"</code>, <code>"Poodle"</code>, <code>"Collie"</code>), and long, abbreviated, and misspelled names are standardized (<code>"American Pit Bull Terrier/Pit Bull"</code> is <code>"Pit Bull"</code>). Crossbreeds are now kept distinct from their breed and are consistently labeled <code>"&lt;Breed&gt; Crossbreed"</code>. The former <code>"Pit Bull (or Mix)"</code> and <code>"Labrador (or Crossbreed)"</code> categories are gone.</li>
 <li>nycdogs now depends on nycmaps rather than nyczips for zip code tables and maps. <code>nyc_zips</code> and <code>nyc_zip_sf</code> are still attached along with nycdogs.</li>
-<li>Documentation for <code>nyc_bites</code> now matches its column names.</li>
+<li>
+<code>nyc_bites</code> is rebuilt from the October 2026 release of the DOHMH Dog Bite Data. It now has 39,082 rows and covers 2015 to 2025, up from 10,280 rows covering 2015 to 2017.</li>
+<li>
+<code>nyc_bites$breed_rc</code> is now coded in the same way as <code>nyc_license$breed_rc</code>, so that breeds can be compared across the two tables. <code>breed</code> has whitespace and capitalization standardized.</li>
+<li>
+<code>nyc_bites</code> has several breaking changes. <code>zip_code</code> is now character, not integer. <code>unique_id</code> and <code>year</code> are now integer. <code>unique_id</code> is no longer unique across the table, as the source restarts it in each release; it is unique within <code>year</code>. Columns are reordered, with <code>year</code> after <code>date_of_bite</code> and <code>breed_rc</code> after <code>breed</code>.</li>
+<li>
+<code>nyc_bites</code> gains a <code>zip</code> column, identical to <code>zip_code</code>, to match <code>nyc_license</code>.</li>
 </ul></div>
   </main></div>
 

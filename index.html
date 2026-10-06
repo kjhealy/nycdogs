@@ -64,7 +64,7 @@
 <span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://kjhealy.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Including <code>https://cloud.r-project.org</code> ensures dependencies on CRAN are resolved automatically.</p>
-<p>The <code>nycdogs</code> package contains two datasets, <code>nyc_license</code> and <code>nyc_bites</code>. They contain, respectively, data on all licensed dogs in New York city (current to 2026), and data on reported dog bites in New York city (older data). It depends on <a href="https://kjhealy.github.io/nycmaps/" class="external-link"><code>nycmaps</code></a>, which is attached automatically and provides the zip code table and map used to draw maps of the data.</p>
+<p>The <code>nycdogs</code> package contains two datasets, <code>nyc_license</code> and <code>nyc_bites</code>. They contain, respectively, data on all licensed dogs in New York city (current to 2026), and data on reported dog bites in New York city (2015 to 2025). Both tables have a <code>breed_rc</code> column of recoded breed names that is coded in the same way, so that breeds can be compared across them. It depends on <a href="https://kjhealy.github.io/nycmaps/" class="external-link"><code>nycmaps</code></a>, which is attached automatically and provides the zip code table and map used to draw maps of the data.</p>
 </div>
 <div class="section level2">
 <h2 id="loading-the-data">Loading the data<a class="anchor" aria-label="anchor" href="#loading-the-data"></a>

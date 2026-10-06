@@ -41,8 +41,7 @@ A tibble with 819,323 rows and 12 columns:
 
 - zip_code:
 
-  Owner zip code. Same as `zip`, retained for compatibility with
-  [nyc_bites](https://kjhealy.github.io/nycdogs/reference/nyc_bites.md).
+  Owner zip code. Same as `zip`.
 
 - zip:
 
@@ -110,7 +109,9 @@ to five years.
   left as they are.
 
 The lookup table used is in `data-raw/breed_recodes.csv` in the package
-source.
+source. `breed_rc` in
+[nyc_bites](https://kjhealy.github.io/nycdogs/reference/nyc_bites.md) is
+coded in the same way.
 
 Other than this the data is deliberately lightly cleaned. Owner-provided
 values are kept as reported, including placeholder names (e.g.

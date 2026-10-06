@@ -72,8 +72,7 @@ capitalization are standardized. "Unknown" is a reported category.</p></dd>
 are standardized, and varieties are collapsed to their breed. See Details.</p></dd>
 
 <dt>zip_code</dt>
-<dd><p>Owner zip code. Same as <code>zip</code>, retained for compatibility
-with <a href="nyc_bites.html">nyc_bites</a>.</p></dd>
+<dd><p>Owner zip code. Same as <code>zip</code>.</p></dd>
 
 <dt>zip</dt>
 <dd><p>Owner zip code.</p></dd>
@@ -128,7 +127,7 @@ Crossbreed" are all "Terrier Crossbreed".</p></li>
 <li><p>Free-text descriptions of two or more breeds, e.g. "Beagle/Boxer", are
 left as they are.</p></li>
 </ul><p>The lookup table used is in <code>data-raw/breed_recodes.csv</code> in the package
-source.</p>
+source. <code>breed_rc</code> in <a href="nyc_bites.html">nyc_bites</a> is coded in the same way.</p>
 <p>Other than this the data is deliberately lightly cleaned. Owner-provided
 values are kept as reported, including placeholder names (e.g. "Unknown",
 "Name not provided"), implausible birth years, and malformed zip codes.</p><div class="section">
