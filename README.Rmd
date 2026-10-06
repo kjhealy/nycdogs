@@ -135,37 +135,15 @@ nyc_coco
 ## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.
 coco_map <- left_join(nyc_zip_sf, nyc_coco, by = join_by(zip))
 
-## Map theme
-theme_nymap <- function(base_size=9, base_family="") {
-    require(grid)
-    theme_bw(base_size=base_size, base_family=base_family) %+replace%
-        theme(axis.line=element_blank(),
-              axis.text=element_blank(),
-              axis.ticks=element_blank(),
-              axis.title=element_blank(),
-              panel.background=element_blank(),
-              panel.border=element_blank(),
-              panel.grid=element_blank(),
-              panel.spacing=unit(0, "lines"),
-              plot.background=element_blank(),
-              legend.justification = c(0,0),
-              legend.position = "inside",
-              legend.position.inside = c(0, 0.7),
-              legend.direction = "horizontal"
-        )
-}
-
-coco_map |> ggplot(mapping = aes(fill = pct)) +
-    geom_sf(color = "gray80", linewidth = 0.1) +
-    scale_fill_binned(guide = "bins", type = "viridis", option = "A") +
-    labs(fill = "Percent of all NYC\ndogs named Coco") +
-  annotate(geom = "text", x = -74.16, y = 40.84,
-           label = "Where's Coco?", size = 6) +
-  ## The map is in EPSG:2263; the annotation is positioned by lon/lat
-  coord_sf(default_crs = sf::st_crs(4326)) +
-    theme_nymap()
-
-
+coco_map |>
+  ggplot(mapping = aes(fill = pct)) +
+  geom_sf(color = "gray80", linewidth = 0.1) +
+  scale_fill_binned(guide = "bins", type = "viridis", option = "A") +
+  labs(
+    title = "Where's Coco?",
+    fill = "Percent of all NYC\ndogs named Coco"
+  ) +
+  theme_void()
 ```
 
 Hex photo: Detail from Elliott Erwitt, "New York City, 1974".
