@@ -53,7 +53,7 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>nycdogs</code> is a data package. Install the package from <a href="https://github.com/kjhealy/nycdogs" class="external-link">GitHub</a> with:</p>
+<p><code>nycdogs</code> is a data package. I use it mostly to teach. Install it from <a href="https://github.com/kjhealy/nycdogs" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"kjhealy/nycdogs"</span><span class="op">)</span></span></code></pre></div>
@@ -63,13 +63,28 @@
 <span>  <span class="st">"nycdogs"</span>,</span>
 <span>  repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://kjhealy.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Including <code>https://cloud.r-project.org</code> ensures dependencies on CRAN are resolved automatically.</p>
-<p>The <code>nycdogs</code> package contains two datasets, <code>nyc_license</code> and <code>nyc_bites</code>. They contain, respectively, data on all licensed dogs in New York city (current to 2026), and data on reported dog bites in New York city (2015 to 2025). Both tables have a <code>breed_rc</code> column of recoded breed names that is coded in the same way, so that breeds can be compared across them. It depends on <a href="https://kjhealy.github.io/nycmaps/" class="external-link"><code>nycmaps</code></a>, which is attached automatically and provides the zip code table and map used to draw maps of the data.</p>
+<p>The <code>https://cloud.r-project.org</code> entry lets R find the CRAN dependencies automatically.</p>
+</div>
+<div class="section level2">
+<h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
+</h2>
+<p>The <code>nycdogs</code> package contains two datasets, <code>nyc_license</code> and <code>nyc_bites</code>.</p>
+<ul>
+<li>
+<code>nyc_license</code> has data on all licensed dogs in New York City, up to
+<ol start="2026" style="list-style-type: decimal"><li>
+</li></ol>
+</li>
+<li>
+<code>nyc_bites</code> has data on reported dog bites in New York City, from 2015 to 2025.</li>
+</ul>
+<p>Each table has a <code>breed_rc</code> column of recoded breed names. The two columns use the same codes, so you can compare breeds between the tables.</p>
+<p>The package depends on <a href="https://kjhealy.github.io/nycmaps/" class="external-link"><code>nycmaps</code></a>. R attaches <code>nycmaps</code> automatically. <code>nycmaps</code> supplies the zip code table and the zip code map that the examples use.</p>
 </div>
 <div class="section level2">
 <h2 id="loading-the-data">Loading the data<a class="anchor" aria-label="anchor" href="#loading-the-data"></a>
 </h2>
-<p>The package works best with the <a href="http://tidyverse.org/" class="external-link">tidyverse</a> libraries and the <a href="https://r-spatial.github.io/sf/index.html" class="external-link">simple features</a> package for mapping.</p>
+<p>The package works best with the <a href="http://tidyverse.org/" class="external-link">tidyverse</a>. Use <a href="https://r-spatial.github.io/sf/index.html" class="external-link">simple features</a> to draw maps.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
@@ -84,11 +99,11 @@
 <span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</span></span></code></pre></div>
-<p>Load the data:</p>
+<p>Load the package:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://kjhealy.github.io/nycdogs/">nycdogs</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: nycmaps</span></span></code></pre></div>
-<p>To look at the tibble that contains the licensing data, do this:</p>
+<p>Print the tibble of license data:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_license</span></span>
 <span><span class="co">#&gt; # A tibble: 819,323 × 12</span></span>
@@ -111,10 +126,15 @@
 <div class="section level2">
 <h2 id="licenses-dogs-and-duplicate-records">Licenses, dogs, and duplicate records<a class="anchor" aria-label="anchor" href="#licenses-dogs-and-duplicate-records"></a>
 </h2>
-<p>Two features of the data matter for any analysis.</p>
-<p>First, dog licenses expire. Each row in <code>nyc_license</code> is a record of a time-limited license that was issued, not necessarily the record of a unique individual dog. A dog whose license is renewed appears once for each license period.</p>
-<p>Second, the table contains several extracts of the licensing data, marked by the <code>extract_year</code> column. A license that was active in more than one extract year appears in each of them, so there are a substantial number of duplicated rows.</p>
-<p>Any analysis of the table should try to de-duplicate the records. For example, arrange the data by extract year, find distinct records based on a number of the identifying columns, and keep only one of them (here, the earliest):</p>
+<p>Users should be aware of two features of <code>nyc_license</code>.</p>
+<p>First, each row is a record of one time-limited license. A row is not necessarily the record of a unique dog. A dog with a renewed license appears one time for each license period. In New York City, dog licenses can be issued for one year or five years. The table does not provide any “dog id” that ties sequences of licenses to individual dogs.</p>
+<p>Second, the table contains several extracts of the license data. It seems like the way the provider updates the Open Data record is to periodically pull an extract from its internal database and append it to the existing public version. The <code>extract_year</code> column identifies the extract. A license that was active in more than one extract year appears in each of those extracts. As a result, the table has a large number of duplicate rows.</p>
+<p>De-duplicate the records before you analyze the table. For example:</p>
+<ol style="list-style-type: decimal">
+<li>Arrange the data by extract year.</li>
+<li>Find the distinct records, based on several of the identifying columns.</li>
+<li>Keep only one of each set of duplicates (here, the earliest).</li>
+</ol>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_license</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">extract_year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -144,13 +164,69 @@
 <span><span class="co">#&gt; # ℹ 664,034 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 6 more variables: zip &lt;chr&gt;, license_issued_date &lt;date&gt;,</span></span>
 <span><span class="co">#&gt; #   license_expired_date &lt;date&gt;, extract_year &lt;int&gt;, borough &lt;chr&gt;, city &lt;chr&gt;</span></span></code></pre></div>
-<p>This leaves one row per license. To count dogs and not licenses, drop the two license date columns from the call to <code>distinct()</code>. There is no dog identifier in the data, so this is approximate: two dogs with the same name, sex, birth year, and breed in the same zip code cannot be told apart.</p>
+<p>This code keeps one row for each license. To make a best-effort at counting individual dogs for the whole dataset and not licenses, remove the two license date columns from the call to <code>distinct()</code>. Again, the data has no dog identifier, so the count is approximate. We cannot distinguish two dogs that have the same name, sex, birth year, and breed in the same zip code. Nor can we track a dog that moves from one zip code to another between license renewals.</p>
+</div>
+<div class="section level2">
+<h2 id="dog-bites-and-the-unique_id-column">Dog bites and the <code>unique_id</code> column<a class="anchor" aria-label="anchor" href="#dog-bites-and-the-unique_id-column"></a>
+</h2>
+<p>The bite data has similar issues.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nyc_bites</span></span>
+<span><span class="co">#&gt; # A tibble: 39,082 × 12</span></span>
+<span><span class="co">#&gt;    unique_id date_of_bite  year species breed  breed_rc age   gender spay_neuter</span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;date&gt;       &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;  &lt;lgl&gt;      </span></span>
+<span><span class="co">#&gt;  1         4 2015-01-01    2015 Dog     Ameri… Pit Bull 6     M      FALSE      </span></span>
+<span><span class="co">#&gt;  2        14 2015-01-01    2015 Dog     Ameri… Pit Bull &lt;NA&gt;  U      FALSE      </span></span>
+<span><span class="co">#&gt;  3      4039 2015-01-01    2015 Dog     Dachs… Dachshu… 8     M      FALSE      </span></span>
+<span><span class="co">#&gt;  4      4043 2015-01-01    2015 Dog     Mixed… Mixed B… 10    M      TRUE       </span></span>
+<span><span class="co">#&gt;  5      6393 2015-01-01    2015 Dog     Dachs… Dachshu… 1     F      FALSE      </span></span>
+<span><span class="co">#&gt;  6      6829 2015-01-01    2015 Dog     Bull … Bulldog  3     F      FALSE      </span></span>
+<span><span class="co">#&gt;  7      9350 2015-01-01    2015 Dog     Pit B… Pit Bull &lt;NA&gt;  M      FALSE      </span></span>
+<span><span class="co">#&gt;  8         1 2015-01-02    2015 Dog     Poodl… Poodle   3     M      TRUE       </span></span>
+<span><span class="co">#&gt;  9         2 2015-01-02    2015 Dog     Husky  Siberia… &lt;NA&gt;  U      FALSE      </span></span>
+<span><span class="co">#&gt; 10         3 2015-01-02    2015 Dog     &lt;NA&gt;   &lt;NA&gt;     &lt;NA&gt;  U      FALSE      </span></span>
+<span><span class="co">#&gt; # ℹ 39,072 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: borough &lt;chr&gt;, zip_code &lt;chr&gt;, zip &lt;chr&gt;</span></span></code></pre></div>
+<p>The <code>unique_id</code> column does not identify a row uniquely. The source data combines several releases, and the identifier starts again from 1 in each release:</p>
+<ul>
+<li>one time for 2015 to 2017,</li>
+<li>one time for 2018 to 2021,</li>
+<li>one time for each year from 2022.</li>
+</ul>
+<p>Thus, many values of <code>unique_id</code> appear in more than one row:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nyc_bites</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">count</span><span class="op">(</span><span class="va">unique_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 10,280 × 2</span></span>
+<span><span class="co">#&gt;    unique_id     n</span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1         1     6</span></span>
+<span><span class="co">#&gt;  2         2     6</span></span>
+<span><span class="co">#&gt;  3         3     6</span></span>
+<span><span class="co">#&gt;  4         4     6</span></span>
+<span><span class="co">#&gt;  5         5     6</span></span>
+<span><span class="co">#&gt;  6         6     6</span></span>
+<span><span class="co">#&gt;  7         7     6</span></span>
+<span><span class="co">#&gt;  8         8     6</span></span>
+<span><span class="co">#&gt;  9         9     6</span></span>
+<span><span class="co">#&gt; 10        10     6</span></span>
+<span><span class="co">#&gt; # ℹ 10,270 more rows</span></span></code></pre></div>
+<p>The combination of <code>year</code> and <code>unique_id</code> is unique. No combination appears in more than one row:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nyc_bites</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">count</span><span class="op">(</span><span class="va">year</span>, <span class="va">unique_id</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 0 × 3</span></span>
+<span><span class="co">#&gt; # ℹ 3 variables: year &lt;int&gt;, unique_id &lt;int&gt;, n &lt;int&gt;</span></span></code></pre></div>
+<p>Use <code>year</code> and <code>unique_id</code> together to identify a bite record.</p>
+<p>When working with <code>nyc_license</code> and <code>nyc_bites</code> data together, bear in mind that while the license table is filled out by the owner of the dog, the bites data comes from a report by the person on the receiving end of the bite. This means that information about the dog in the bites table is less reliable about, e.g., the breed, sex, and age of the dog.</p>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>Where dogs with a particular name live. We want to count dogs and not licenses, so we first de-duplicate the table, leaving the license dates out of the identifying columns:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>This example shows where dogs with a given name live. We de-duplicate the table, omitting the license dates from the identifying columns to (imperfectly) pick out individual dogs:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_dogs</span> <span class="op">&lt;-</span> <span class="va">nyc_license</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">extract_year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">distinct</span><span class="op">(</span></span>
@@ -179,8 +255,8 @@
 <span><span class="co">#&gt; # ℹ 357,654 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 6 more variables: zip &lt;chr&gt;, license_issued_date &lt;date&gt;,</span></span>
 <span><span class="co">#&gt; #   license_expired_date &lt;date&gt;, extract_year &lt;int&gt;, borough &lt;chr&gt;, city &lt;chr&gt;</span></span></code></pre></div>
-<p>Then we find the share of dogs named Coco that live in each zip code, and map it:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>Then we calculate the share of dogs named Coco that live in each zip code and draw a map of the result:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">boro_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Manhattan"</span>, <span class="st">"Queens"</span>, <span class="st">"Brooklyn"</span>, <span class="st">"Bronx"</span>, <span class="st">"Staten Island"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">nyc_coco</span> <span class="op">&lt;-</span> <span class="va">nyc_dogs</span> <span class="op">|&gt;</span></span>
@@ -209,7 +285,7 @@
 <span><span class="co">#&gt; 10 10011 Coco           28 0.0109    1.09</span></span>
 <span><span class="co">#&gt; # ℹ 187 more rows</span></span>
 <span></span>
-<span><span class="co">## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.</span></span>
+<span><span class="co">## nyc_zip_sf is from the nycmaps package. R attaches nycmaps with nycdogs.</span></span>
 <span><span class="va">coco_map</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">nyc_zip_sf</span>, <span class="va">nyc_coco</span>, by <span class="op">=</span> <span class="fu">join_by</span><span class="op">(</span><span class="va">zip</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">coco_map</span> <span class="op">|&gt;</span></span>

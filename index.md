@@ -2,7 +2,7 @@
 
 ## Installation
 
-`nycdogs` is a data package. Install the package from
+`nycdogs` is a data package. I use it mostly to teach. Install it from
 [GitHub](https://github.com/kjhealy/nycdogs) with:
 
 ``` r
@@ -22,25 +22,32 @@ install.packages(
 )
 ```
 
-Including `https://cloud.r-project.org` ensures dependencies on CRAN are
-resolved automatically.
+The `https://cloud.r-project.org` entry lets R find the CRAN
+dependencies automatically.
+
+## The data
 
 The `nycdogs` package contains two datasets, `nyc_license` and
-`nyc_bites`. They contain, respectively, data on all licensed dogs in
-New York city (current to 2026), and data on reported dog bites in New
-York city (2015 to 2025). Both tables have a `breed_rc` column of
-recoded breed names that is coded in the same way, so that breeds can be
-compared across them. It depends on
-[`nycmaps`](https://kjhealy.github.io/nycmaps/), which is attached
-automatically and provides the zip code table and map used to draw maps
-of the data.
+`nyc_bites`.
+
+- `nyc_license` has data on all licensed dogs in New York City, up to
+  2026. 
+- `nyc_bites` has data on reported dog bites in New York City, from 2015
+  to 2025.
+
+Each table has a `breed_rc` column of recoded breed names. The two
+columns use the same codes, so you can compare breeds between the
+tables.
+
+The package depends on [`nycmaps`](https://kjhealy.github.io/nycmaps/).
+R attaches `nycmaps` automatically. `nycmaps` supplies the zip code
+table and the zip code map that the examples use.
 
 ## Loading the data
 
-The package works best with the [tidyverse](http://tidyverse.org/)
-libraries and the [simple
-features](https://r-spatial.github.io/sf/index.html) package for
-mapping.
+The package works best with the [tidyverse](http://tidyverse.org/). Use
+[simple features](https://r-spatial.github.io/sf/index.html) to draw
+maps.
 
 ``` r
 
@@ -59,7 +66,7 @@ library(sf)
 #> Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 ```
 
-Load the data:
+Load the package:
 
 ``` r
 
@@ -67,7 +74,7 @@ library(nycdogs)
 #> Loading required package: nycmaps
 ```
 
-To look at the tibble that contains the licensing data, do this:
+Print the tibble of license data:
 
 ``` r
 
@@ -92,22 +99,28 @@ nyc_license
 
 ## Licenses, dogs, and duplicate records
 
-Two features of the data matter for any analysis.
+Users should be aware of two features of `nyc_license`.
 
-First, dog licenses expire. Each row in `nyc_license` is a record of a
-time-limited license that was issued, not necessarily the record of a
-unique individual dog. A dog whose license is renewed appears once for
-each license period.
+First, each row is a record of one time-limited license. A row is not
+necessarily the record of a unique dog. A dog with a renewed license
+appears one time for each license period. In New York City, dog licenses
+can be issued for one year or five years. The table does not provide any
+“dog id” that ties sequences of licenses to individual dogs.
 
-Second, the table contains several extracts of the licensing data,
-marked by the `extract_year` column. A license that was active in more
-than one extract year appears in each of them, so there are a
-substantial number of duplicated rows.
+Second, the table contains several extracts of the license data. It
+seems like the way the provider updates the Open Data record is to
+periodically pull an extract from its internal database and append it to
+the existing public version. The `extract_year` column identifies the
+extract. A license that was active in more than one extract year appears
+in each of those extracts. As a result, the table has a large number of
+duplicate rows.
 
-Any analysis of the table should try to de-duplicate the records. For
-example, arrange the data by extract year, find distinct records based
-on a number of the identifying columns, and keep only one of them (here,
-the earliest):
+De-duplicate the records before you analyze the table. For example:
+
+1.  Arrange the data by extract year.
+2.  Find the distinct records, based on several of the identifying
+    columns.
+3.  Keep only one of each set of duplicates (here, the earliest).
 
 ``` r
 
@@ -141,17 +154,94 @@ nyc_license |>
 #> #   license_expired_date <date>, extract_year <int>, borough <chr>, city <chr>
 ```
 
-This leaves one row per license. To count dogs and not licenses, drop
-the two license date columns from the call to `distinct()`. There is no
-dog identifier in the data, so this is approximate: two dogs with the
-same name, sex, birth year, and breed in the same zip code cannot be
-told apart.
+This code keeps one row for each license. To make a best-effort at
+counting individual dogs for the whole dataset and not licenses, remove
+the two license date columns from the call to `distinct()`. Again, the
+data has no dog identifier, so the count is approximate. We cannot
+distinguish two dogs that have the same name, sex, birth year, and breed
+in the same zip code. Nor can we track a dog that moves from one zip
+code to another between license renewals.
+
+## Dog bites and the `unique_id` column
+
+The bite data has similar issues.
+
+``` r
+
+nyc_bites
+#> # A tibble: 39,082 × 12
+#>    unique_id date_of_bite  year species breed  breed_rc age   gender spay_neuter
+#>        <int> <date>       <int> <chr>   <chr>  <chr>    <chr> <chr>  <lgl>      
+#>  1         4 2015-01-01    2015 Dog     Ameri… Pit Bull 6     M      FALSE      
+#>  2        14 2015-01-01    2015 Dog     Ameri… Pit Bull <NA>  U      FALSE      
+#>  3      4039 2015-01-01    2015 Dog     Dachs… Dachshu… 8     M      FALSE      
+#>  4      4043 2015-01-01    2015 Dog     Mixed… Mixed B… 10    M      TRUE       
+#>  5      6393 2015-01-01    2015 Dog     Dachs… Dachshu… 1     F      FALSE      
+#>  6      6829 2015-01-01    2015 Dog     Bull … Bulldog  3     F      FALSE      
+#>  7      9350 2015-01-01    2015 Dog     Pit B… Pit Bull <NA>  M      FALSE      
+#>  8         1 2015-01-02    2015 Dog     Poodl… Poodle   3     M      TRUE       
+#>  9         2 2015-01-02    2015 Dog     Husky  Siberia… <NA>  U      FALSE      
+#> 10         3 2015-01-02    2015 Dog     <NA>   <NA>     <NA>  U      FALSE      
+#> # ℹ 39,072 more rows
+#> # ℹ 3 more variables: borough <chr>, zip_code <chr>, zip <chr>
+```
+
+The `unique_id` column does not identify a row uniquely. The source data
+combines several releases, and the identifier starts again from 1 in
+each release:
+
+- one time for 2015 to 2017,
+- one time for 2018 to 2021,
+- one time for each year from 2022.
+
+Thus, many values of `unique_id` appear in more than one row:
+
+``` r
+
+nyc_bites |>
+  count(unique_id) |>
+  filter(n > 1)
+#> # A tibble: 10,280 × 2
+#>    unique_id     n
+#>        <int> <int>
+#>  1         1     6
+#>  2         2     6
+#>  3         3     6
+#>  4         4     6
+#>  5         5     6
+#>  6         6     6
+#>  7         7     6
+#>  8         8     6
+#>  9         9     6
+#> 10        10     6
+#> # ℹ 10,270 more rows
+```
+
+The combination of `year` and `unique_id` is unique. No combination
+appears in more than one row:
+
+``` r
+
+nyc_bites |>
+  count(year, unique_id) |>
+  filter(n > 1)
+#> # A tibble: 0 × 3
+#> # ℹ 3 variables: year <int>, unique_id <int>, n <int>
+```
+
+Use `year` and `unique_id` together to identify a bite record.
+
+When working with `nyc_license` and `nyc_bites` data together, bear in
+mind that while the license table is filled out by the owner of the dog,
+the bites data comes from a report by the person on the receiving end of
+the bite. This means that information about the dog in the bites table
+is less reliable about, e.g., the breed, sex, and age of the dog.
 
 ## Example
 
-Where dogs with a particular name live. We want to count dogs and not
-licenses, so we first de-duplicate the table, leaving the license dates
-out of the identifying columns:
+This example shows where dogs with a given name live. We de-duplicate
+the table, omitting the license dates from the identifying columns to
+(imperfectly) pick out individual dogs:
 
 ``` r
 
@@ -185,8 +275,8 @@ nyc_dogs
 #> #   license_expired_date <date>, extract_year <int>, borough <chr>, city <chr>
 ```
 
-Then we find the share of dogs named Coco that live in each zip code,
-and map it:
+Then we calculate the share of dogs named Coco that live in each zip
+code and draw a map of the result:
 
 ``` r
 
@@ -218,7 +308,7 @@ nyc_coco
 #> 10 10011 Coco           28 0.0109    1.09
 #> # ℹ 187 more rows
 
-## nyc_zip_sf is from the nycmaps package, which is automatically loaded by nycdogs.
+## nyc_zip_sf is from the nycmaps package. R attaches nycmaps with nycdogs.
 coco_map <- left_join(nyc_zip_sf, nyc_coco, by = join_by(zip))
 
 coco_map |>

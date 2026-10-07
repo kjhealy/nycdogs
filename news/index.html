@@ -33,20 +33,34 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="nycdogs-030">nycdogs 0.3.0<a class="anchor" aria-label="anchor" href="#nycdogs-030"></a></h2>
 <ul><li>
-<code>nyc_license</code> is rebuilt from the October 2026 release of the NYC Dog Licensing Dataset. It now has 819,323 rows and adds the 2026 extract year.</li>
+<code>nyc_license</code> now uses the October 2026 release of the NYC Dog Licensing Dataset. The table has 819,323 rows and includes the 2026 extract year.</li>
 <li>
-<code>nyc_license$breed_name</code> has whitespace and capitalization standardized, so that e.g. <code>"Beagle Mix"</code>, <code>"BEAGLE MIX"</code>, and <code>"beagle mix"</code> are a single breed.</li>
+<code>nyc_license$breed_name</code> now has standard whitespace and capitalization. For example, <code>"Beagle Mix"</code>, <code>"BEAGLE MIX"</code>, and <code>"beagle mix"</code> are now one breed.</li>
 <li>
-<code>nyc_license$breed_rc</code> is recoded much more thoroughly. Inverted names are reordered (<code>"Bull Dog, French"</code> is <code>"French Bulldog"</code>), varieties are collapsed to their breed (<code>"Dachshund"</code>, <code>"Poodle"</code>, <code>"Collie"</code>), and long, abbreviated, and misspelled names are standardized (<code>"American Pit Bull Terrier/Pit Bull"</code> is <code>"Pit Bull"</code>). Crossbreeds are now kept distinct from their breed and are consistently labeled <code>"&lt;Breed&gt; Crossbreed"</code>. The former <code>"Pit Bull (or Mix)"</code> and <code>"Labrador (or Crossbreed)"</code> categories are gone.</li>
-<li>nycdogs now depends on nycmaps rather than nyczips for zip code tables and maps. <code>nyc_zips</code> and <code>nyc_zip_sf</code> are still attached along with nycdogs.</li>
+<code>nyc_license$breed_rc</code> has a new, more complete recode:
+<ul><li>Inverted names are in their usual order. For example, <code>"Bull Dog, French"</code> is <code>"French Bulldog"</code>.</li>
+<li>Each variety has the name of its breed, such as <code>"Dachshund"</code>, <code>"Poodle"</code>, or <code>"Collie"</code>.</li>
+<li>Long, abbreviated, and misspelled names have one standard form. For example, <code>"American Pit Bull Terrier/Pit Bull"</code> is <code>"Pit Bull"</code>.</li>
+<li>Each crossbreed is distinct from its breed and has the label <code>"&lt;Breed&gt; Crossbreed"</code>.</li>
+<li>The <code>"Pit Bull (or Mix)"</code> and <code>"Labrador (or Crossbreed)"</code> categories no longer exist.</li>
+</ul></li>
+<li>nycdogs now depends on nycmaps for zip code tables and maps. It no longer depends on nyczips. R still attaches <code>nyc_zips</code> and <code>nyc_zip_sf</code> with nycdogs.</li>
 <li>
-<code>nyc_bites</code> is rebuilt from the October 2026 release of the DOHMH Dog Bite Data. It now has 39,082 rows and covers 2015 to 2025, up from 10,280 rows covering 2015 to 2017.</li>
+<code>nyc_bites</code> now uses the October 2026 release of the DOHMH Dog Bite Data. The table has 39,082 rows for 2015 to 2025. The previous table had 10,280 rows for 2015 to 2017.</li>
 <li>
-<code>nyc_bites$breed_rc</code> is now coded in the same way as <code>nyc_license$breed_rc</code>, so that breeds can be compared across the two tables. <code>breed</code> has whitespace and capitalization standardized.</li>
+<code>nyc_bites$breed_rc</code> now uses the same codes as <code>nyc_license$breed_rc</code>, so you can compare breeds between the two tables. <code>nyc_bites$breed</code> now has standard whitespace and capitalization.</li>
 <li>
-<code>nyc_bites</code> has several breaking changes. <code>zip_code</code> is now character, not integer. <code>unique_id</code> and <code>year</code> are now integer. <code>unique_id</code> is no longer unique across the table, as the source restarts it in each release; it is unique within <code>year</code>. Columns are reordered, with <code>year</code> after <code>date_of_bite</code> and <code>breed_rc</code> after <code>breed</code>.</li>
+<code>nyc_bites</code> has these breaking changes:
+<ul><li>
+<code>zip_code</code> is now character, not integer.</li>
 <li>
-<code>nyc_bites</code> gains a <code>zip</code> column, identical to <code>zip_code</code>, to match <code>nyc_license</code>.</li>
+<code>unique_id</code> and <code>year</code> are now integer.</li>
+<li>
+<code>unique_id</code> is not unique in the table, because the source starts it again from 1 in each release. The combination of <code>year</code> and <code>unique_id</code> is unique.</li>
+<li>The columns have a new order. <code>year</code> is after <code>date_of_bite</code>, and <code>breed_rc</code> is after <code>breed</code>.</li>
+</ul></li>
+<li>
+<code>nyc_bites</code> has a new <code>zip</code> column. It is identical to <code>zip_code</code> and agrees with the <code>zip</code> column in <code>nyc_license</code>.</li>
 </ul></div>
   </main></div>
 
