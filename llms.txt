@@ -314,7 +314,7 @@ coco_map <- left_join(nyc_zip_sf, nyc_coco, by = join_by(zip))
 coco_map |>
   ggplot(mapping = aes(fill = pct)) +
   geom_sf(color = "gray80", linewidth = 0.1) +
-  scale_fill_binned(guide = "bins", type = "viridis") +
+  scale_fill_binned(guide = guide_bins(reverse = TRUE), type = "viridis") +
   labs(
     title = "Where's Coco?",
     fill = "Percent of all NYC\ndogs named Coco"
