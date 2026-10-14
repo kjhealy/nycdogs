@@ -51,6 +51,15 @@ The package depends on [`nycmaps`](https://kjhealy.github.io/nycmaps/).
 R attaches `nycmaps` automatically. `nycmaps` supplies the zip code
 table and the zip code map that the examples use.
 
+The source data is from NYC OpenData:
+
+- [NYC Dog Licensing
+  Dataset](https://data.cityofnewyork.us/Health/NYC-Dog-Licensing-Dataset/nu7n-tubp/about_data),
+  for `nyc_license`.
+- [DOHMH Dog Bite
+  Data](https://data.cityofnewyork.us/Health/DOHMH-Dog-Bite-Data/rsgh-akpg/about_data),
+  for `nyc_bites`.
+
 ## Loading the data
 
 The package works best with the [tidyverse](http://tidyverse.org/). Use
